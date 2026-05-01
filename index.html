@@ -3,1238 +3,2486 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kriova Studio – Pricing</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Kriova Studio — Social Media & Brand Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --cream: #FAF7F2;
-    --warm-white: #FFFEF9;
-    --ink: #1A1410;
-    --ink-light: #3D3530;
-    --gold: #C9A96E;
-    --gold-light: #E8D5B0;
-    --gold-dark: #9E7B3F;
-    --rose: #D4A09A;
-    --sage: #8BA888;
-    --border: rgba(201,169,110,0.25);
-    --shadow: 0 8px 40px rgba(26,20,16,0.08);
-    --shadow-lg: 0 24px 80px rgba(26,20,16,0.14);
-  }
+/* ═══════════════════════════════════════════════
+   ROOT & RESET
+═══════════════════════════════════════════════ */
+:root {
+  --white: #FFFFFF;
+  --off-white: #F8F6F2;
+  --light-bg: #F2EFE9;
+  --black: #0A0806;
+  --dark-bg: #111009;
+  --dark-card: #1A1712;
+  --gold: #C8A96A;
+  --gold-2: #E4C98A;
+  --gold-dark: #9A7A40;
+  --rose: #C97B7B;
+  --sage: #7A9E84;
+  --border-light: rgba(0,0,0,0.08);
+  --border-gold: rgba(200,169,106,0.3);
+  --border-dark: rgba(200,169,106,0.15);
+  --text-dark: #0A0806;
+  --text-mid: #4A4238;
+  --text-light: #8A7E72;
+  --text-cream: #F8F4EE;
+  --text-cream-dim: rgba(248,244,238,0.55);
+  --radius: 4px;
+  --nav-h: 80px;
+  --transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--white);
+  color: var(--text-dark);
+  overflow-x: hidden;
+  cursor: none;
+}
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
 
-  html { scroll-behavior: smooth; }
+/* ═══════════════════════════════════════════════
+   CURSOR
+═══════════════════════════════════════════════ */
+.cursor-dot {
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: transform 0.1s ease, background 0.3s;
+}
+.cursor-circle {
+  width: 40px; height: 40px;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: width 0.4s ease, height 0.4s ease, border-color 0.3s, opacity 0.3s;
+  opacity: 0.6;
+}
+body.cursor-hover .cursor-dot { transform: translate(-50%,-50%) scale(2.5); background: var(--gold-2); }
+body.cursor-hover .cursor-circle { width: 60px; height: 60px; opacity: 0.3; }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    overflow-x: hidden;
-    line-height: 1.6;
-  }
+/* ═══════════════════════════════════════════════
+   LOADER
+═══════════════════════════════════════════════ */
+#loader {
+  position: fixed; inset: 0;
+  background: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 99999;
+  flex-direction: column;
+  gap: 24px;
+  transition: opacity 0.8s ease, visibility 0.8s;
+}
+#loader.done { opacity: 0; visibility: hidden; }
+.loader-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  font-weight: 400;
+  opacity: 0;
+  animation: loaderFade 0.6s 0.3s forwards;
+}
+.loader-bar-wrap {
+  width: 200px; height: 1px;
+  background: rgba(200,169,106,0.2);
+  overflow: hidden;
+}
+.loader-bar {
+  height: 100%;
+  background: var(--gold);
+  width: 0%;
+  animation: loadBar 1.8s 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+.loader-pct {
+  font-size: 11px;
+  color: var(--gold-dark);
+  letter-spacing: 0.3em;
+  opacity: 0;
+  animation: loaderFade 0.6s 0.5s forwards;
+}
+@keyframes loaderFade { to { opacity: 1; } }
+@keyframes loadBar { to { width: 100%; } }
 
-  /* ─── NOISE TEXTURE ─── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.4;
-  }
+/* ═══════════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 500;
+  height: var(--nav-h);
+  display: flex; align-items: center;
+  padding: 0 5%;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid var(--border-light);
+  transition: box-shadow 0.3s;
+}
+nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,0.06); }
 
-  /* ─── CUSTOM CURSOR ─── */
-  .cursor {
-    width: 10px; height: 10px;
-    background: var(--gold);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.15s ease, opacity 0.15s ease;
-    transform: translate(-50%, -50%);
-  }
-  .cursor-ring {
-    width: 36px; height: 36px;
-    border: 1.5px solid var(--gold);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-    opacity: 0.5;
-  }
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+  margin-right: auto;
+}
+.nav-logo img {
+  height: 58px;
+  width: auto;
+  object-fit: contain;
+}
+.nav-logo-text {
+  display: none;
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
 
-  /* ─── NAV ─── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 20px 5%;
-    display: flex; align-items: center; justify-content: space-between;
-    backdrop-filter: blur(20px);
-    background: rgba(250,247,242,0.85);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo img {
-    height: 48px;
-    width: auto;
-  }
-  .nav-links {
-    display: flex; gap: 32px; list-style: none;
-  }
-  .nav-links a {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-light);
-    text-decoration: none;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-    position: relative;
-  }
-  .nav-links a::after {
-    content: '';
-    position: absolute; bottom: -2px; left: 0; right: 0;
-    height: 1px;
-    background: var(--gold);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-  }
-  .nav-links a:hover { color: var(--gold-dark); }
-  .nav-links a:hover::after { transform: scaleX(1); }
-  .nav-cta {
-    padding: 10px 24px;
-    background: var(--ink);
-    color: var(--cream) !important;
-    border-radius: 2px;
-    font-size: 13px !important;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: background 0.2s, transform 0.2s !important;
-  }
-  .nav-cta::after { display: none !important; }
-  .nav-cta:hover { background: var(--gold-dark) !important; color: white !important; transform: translateY(-1px); }
+.nav-links {
+  display: flex; align-items: center; gap: 40px;
+}
+.nav-links a {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-mid);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.2s;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1.5px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+.nav-links a:hover { color: var(--text-dark); }
+.nav-links a:hover::after { width: 100%; }
 
-  /* ─── HERO ─── */
-  .hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 140px 5% 80px;
-    position: relative;
-    text-align: center;
-    overflow: hidden;
-  }
+.nav-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 26px;
+  background: var(--black);
+  color: var(--white) !important;
+  font-size: 12px !important;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: var(--radius);
+  transition: var(--transition);
+}
+.nav-btn::after { display: none !important; }
+.nav-btn:hover { background: var(--gold); color: var(--black) !important; transform: translateY(-2px); }
+.nav-btn .btn-arrow { transition: transform 0.3s; }
+.nav-btn:hover .btn-arrow { transform: translateX(4px); }
 
-  .hero-bg-circles {
-    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
-  }
-  .circle {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.07;
-    animation: floatCircle 12s ease-in-out infinite;
-  }
-  .circle-1 { width: 500px; height: 500px; background: var(--gold); top: -100px; right: -100px; animation-delay: 0s; }
-  .circle-2 { width: 300px; height: 300px; background: var(--rose); bottom: 0; left: -80px; animation-delay: 4s; }
-  .circle-3 { width: 200px; height: 200px; background: var(--sage); top: 50%; left: 30%; animation-delay: 8s; }
+.hamburger {
+  display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px;
+}
+.hamburger span {
+  display: block; width: 24px; height: 1.5px;
+  background: var(--text-dark);
+  transition: var(--transition);
+}
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
 
-  @keyframes floatCircle {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(20px, -30px) scale(1.05); }
-  }
+.mobile-menu {
+  display: none;
+  position: fixed; top: var(--nav-h); left: 0; right: 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--border-light);
+  padding: 24px 5% 32px;
+  z-index: 499;
+  flex-direction: column; gap: 0;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  display: block; padding: 16px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-mid);
+  letter-spacing: 0.04em;
+  transition: color 0.2s, padding-left 0.2s;
+}
+.mobile-menu a:hover { color: var(--text-dark); padding-left: 8px; }
+.mobile-menu .mb-btn {
+  margin-top: 20px;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 14px 24px;
+  background: var(--black); color: var(--white);
+  border-radius: var(--radius);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
 
-  .hero-eyebrow {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold-dark);
-    margin-bottom: 20px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
-  }
-  .hero-logo {
-    margin-bottom: 32px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.1s forwards;
-  }
-  .hero-logo img {
-    height: 80px;
-    width: auto;
-    filter: drop-shadow(0 4px 20px rgba(201,169,110,0.3));
-  }
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(52px, 8vw, 100px);
-    font-weight: 300;
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin-bottom: 8px;
-    opacity: 0;
-    animation: fadeUp 0.9s 0.3s forwards;
-  }
-  .hero-title em {
-    font-style: italic;
-    color: var(--gold-dark);
-  }
-  .hero-subtitle {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(20px, 3vw, 32px);
-    font-weight: 300;
-    font-style: italic;
-    color: var(--ink-light);
-    margin-bottom: 24px;
-    opacity: 0;
-    animation: fadeUp 0.9s 0.45s forwards;
-  }
-  .hero-desc {
-    max-width: 560px;
-    font-size: 15px;
-    color: var(--ink-light);
-    line-height: 1.8;
-    opacity: 0;
-    animation: fadeUp 0.9s 0.6s forwards;
-    margin-bottom: 40px;
-  }
-  .hero-scroll {
-    opacity: 0;
-    animation: fadeUp 0.9s 0.9s forwards;
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
-    color: var(--gold-dark);
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
-  .scroll-line {
-    width: 1px;
-    height: 50px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
-  @keyframes scrollPulse {
-    0%, 100% { transform: scaleY(1); opacity: 1; }
-    50% { transform: scaleY(0.6); opacity: 0.4; }
-  }
+/* ═══════════════════════════════════════════════
+   HERO — WHITE THEME
+═══════════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  padding: calc(var(--nav-h) + 60px) 5% 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+  position: relative;
+  overflow: hidden;
+  background: var(--white);
+}
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+/* Decorative grid lines */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(200,169,106,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,169,106,0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+}
 
-  /* ─── SECTION COMMON ─── */
-  section { position: relative; z-index: 1; }
+.hero-left { position: relative; z-index: 2; }
 
-  .section-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold-dark);
-    margin-bottom: 12px;
-    display: block;
-  }
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 5vw, 60px);
-    font-weight: 300;
-    line-height: 1.1;
-    color: var(--ink);
-    margin-bottom: 16px;
-  }
-  .section-title em { font-style: italic; color: var(--gold-dark); }
-  .section-desc {
-    font-size: 15px;
-    color: var(--ink-light);
-    line-height: 1.8;
-    max-width: 540px;
-  }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 7px 16px;
+  border: 1px solid var(--border-gold);
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  background: rgba(200,169,106,0.06);
+  margin-bottom: 28px;
+  opacity: 0; transform: translateY(20px);
+  animation: heroIn 0.8s 0.5s forwards;
+}
+.hero-tag::before {
+  content: ''; width: 6px; height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+}
 
-  /* ─── DIVIDER ─── */
-  .divider {
-    display: flex; align-items: center; gap: 16px;
-    padding: 0 5%; margin: 0 auto;
-    max-width: 1200px;
-  }
-  .divider-line {
-    flex: 1; height: 1px; background: var(--border);
-  }
-  .divider-icon {
-    width: 32px; height: 32px;
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--gold);
-    font-size: 14px;
-  }
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(48px, 6.5vw, 88px);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+  opacity: 0; transform: translateY(30px);
+  animation: heroIn 0.9s 0.65s forwards;
+}
+.hero-title .word-em {
+  font-style: italic;
+  color: var(--gold);
+  position: relative;
+  display: inline-block;
+}
+.hero-title .stroke-text {
+  -webkit-text-stroke: 2px var(--text-dark);
+  color: transparent;
+}
 
-  /* ─── SERVICES ─── */
-  .services {
-    padding: 100px 5%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .services-header {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    margin-bottom: 60px;
-    flex-wrap: wrap; gap: 24px;
-  }
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    overflow: hidden;
-  }
-  .service-card {
-    background: var(--warm-white);
-    padding: 36px 32px;
-    transition: background 0.3s, transform 0.3s;
-    position: relative;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
-  }
-  .service-card.visible { opacity: 1; transform: translateY(0); }
-  .service-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--gold), var(--rose));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s ease;
-  }
-  .service-card:hover::before { transform: scaleX(1); }
-  .service-card:hover { background: #FFFCF5; }
+.hero-sub {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(18px, 2.5vw, 28px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-light);
+  margin-bottom: 28px;
+  opacity: 0; transform: translateY(20px);
+  animation: heroIn 0.8s 0.8s forwards;
+}
 
-  .service-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 40px;
-    font-weight: 300;
-    color: var(--gold-light);
-    line-height: 1;
-    margin-bottom: 16px;
-  }
-  .service-name {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--ink);
-    margin-bottom: 10px;
-    letter-spacing: 0.02em;
-  }
-  .service-desc {
-    font-size: 13.5px;
-    color: var(--ink-light);
-    line-height: 1.75;
-  }
+.hero-desc {
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--text-mid);
+  max-width: 480px;
+  margin-bottom: 44px;
+  font-weight: 300;
+  opacity: 0; transform: translateY(20px);
+  animation: heroIn 0.8s 0.95s forwards;
+}
 
-  /* ─── PRICING ─── */
-  .pricing {
-    padding: 100px 5%;
-    background: var(--ink);
-    position: relative;
-    overflow: hidden;
-  }
-  .pricing::before {
-    content: '';
-    position: absolute;
-    top: -200px; right: -200px;
-    width: 600px; height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .pricing-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .pricing-header {
-    text-align: center;
-    margin-bottom: 64px;
-  }
-  .pricing-header .section-label { color: var(--gold); }
-  .pricing-header .section-title { color: var(--cream); }
-  .pricing-header .section-title em { color: var(--gold); }
-  .pricing-header .section-desc { color: rgba(250,247,242,0.6); margin: 0 auto; text-align: center; }
+.hero-ctas {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  opacity: 0; transform: translateY(20px);
+  animation: heroIn 0.8s 1.1s forwards;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 15px 32px;
+  background: var(--black);
+  color: var(--white);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  border-radius: var(--radius);
+  transition: var(--transition);
+  position: relative; overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--gold);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary:hover { color: var(--black); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.15); }
+.btn-primary span { position: relative; z-index: 1; }
 
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: rgba(201,169,110,0.15);
-  }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 15px 32px;
+  border: 1.5px solid var(--border-light);
+  color: var(--text-mid);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  border-radius: var(--radius);
+  transition: var(--transition);
+}
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold-dark); background: rgba(200,169,106,0.05); transform: translateY(-2px); }
 
-  .plan {
-    background: #211C17;
-    padding: 48px 36px 44px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.4s ease, background 0.3s;
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  .plan.visible { opacity: 1; transform: translateY(0); }
-  .plan.featured {
-    background: #2A2018;
-    transform: translateY(0);
-  }
-  .plan.featured.visible { transform: translateY(-8px); }
-  .plan:hover { background: #2E2620; }
+.hero-trust {
+  display: flex; align-items: center; gap: 16px;
+  margin-top: 40px;
+  opacity: 0; animation: heroIn 0.8s 1.25s forwards;
+}
+.trust-avatars {
+  display: flex;
+}
+.trust-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 2.5px solid var(--white);
+  margin-left: -10px;
+  background: var(--light-bg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-mid);
+  overflow: hidden;
+}
+.trust-avatar:first-child { margin-left: 0; }
+.trust-stars { display: flex; gap: 2px; }
+.trust-star { color: var(--gold); font-size: 14px; }
+.trust-text { font-size: 12.5px; color: var(--text-light); }
+.trust-text strong { color: var(--text-dark); font-weight: 600; }
 
-  .plan-badge {
-    display: inline-block;
-    padding: 4px 14px;
-    background: var(--gold);
-    color: var(--ink);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    border-radius: 2px;
-    margin-bottom: 24px;
-  }
-  .plan-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 32px;
-    font-weight: 300;
-    color: var(--cream);
-    margin-bottom: 8px;
-  }
-  .plan-tagline {
-    font-size: 12.5px;
-    color: rgba(250,247,242,0.45);
-    margin-bottom: 32px;
-    line-height: 1.6;
-  }
-  .plan-price {
-    margin-bottom: 36px;
-    padding-bottom: 32px;
-    border-bottom: 1px solid rgba(201,169,110,0.15);
-  }
-  .price-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 56px;
-    font-weight: 300;
-    color: var(--gold);
-    line-height: 1;
-  }
-  .price-currency {
-    font-size: 24px;
-    vertical-align: top;
-    margin-top: 8px;
-    display: inline-block;
-    color: var(--gold-light);
-  }
-  .price-period {
-    font-size: 12px;
-    color: rgba(250,247,242,0.4);
-    letter-spacing: 0.08em;
-    margin-top: 6px;
-    display: block;
-  }
-  .plan-features {
-    list-style: none;
-    margin-bottom: 40px;
-  }
-  .plan-features li {
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(201,169,110,0.08);
-    font-size: 13.5px;
-    color: rgba(250,247,242,0.7);
-    display: flex; align-items: flex-start; gap: 12px;
-  }
-  .plan-features li::before {
-    content: '✦';
-    color: var(--gold);
-    font-size: 9px;
-    margin-top: 4px;
-    flex-shrink: 0;
-  }
-  .plan-cta {
-    display: block;
-    text-align: center;
-    padding: 14px 24px;
-    border: 1px solid rgba(201,169,110,0.3);
-    color: var(--gold-light);
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  .plan-cta::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--gold);
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-  }
-  .plan-cta span { position: relative; z-index: 1; }
-  .plan-cta:hover::before { transform: translateX(0); }
-  .plan-cta:hover { color: var(--ink); border-color: var(--gold); }
+/* Hero Right — Visual */
+.hero-right {
+  position: relative; z-index: 2;
+  opacity: 0; transform: translateX(40px);
+  animation: heroIn 1s 0.8s forwards;
+}
+.hero-visual {
+  position: relative;
+}
+.hero-card-main {
+  background: var(--black);
+  border-radius: 20px;
+  padding: 40px 36px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.25);
+}
+.hero-card-main::before {
+  content: '';
+  position: absolute;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(200,169,106,0.15) 0%, transparent 70%);
+  top: -100px; right: -100px;
+  pointer-events: none;
+}
+.hc-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 8px;
+}
+.hc-label::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
+.hc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; font-weight: 700;
+  color: var(--text-cream);
+  margin-bottom: 6px;
+}
+.hc-sub {
+  font-size: 13px; color: var(--text-cream-dim);
+  margin-bottom: 28px;
+}
+.hc-stats {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px; margin-bottom: 28px;
+}
+.hc-stat {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(200,169,106,0.12);
+  border-radius: 10px;
+  padding: 16px;
+}
+.hc-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.hc-stat-label { font-size: 11px; color: var(--text-cream-dim); letter-spacing: 0.05em; }
+.hc-bar-wrap { margin-bottom: 6px; }
+.hc-bar-label {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--text-cream-dim);
+  margin-bottom: 6px;
+}
+.hc-bar {
+  height: 4px; background: rgba(255,255,255,0.08);
+  border-radius: 2px; overflow: hidden;
+}
+.hc-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-2));
+  animation: barFill 2s 2s both;
+}
+@keyframes barFill { from { width: 0 !important; } }
 
-  .plan.featured .plan-cta {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: var(--ink);
-  }
-  .plan.featured .plan-cta::before { background: var(--gold-dark); }
-  .plan.featured .plan-cta:hover { color: var(--cream); }
+/* Floating widgets */
+.hero-float-1 {
+  position: absolute;
+  top: -20px; right: -30px;
+  background: var(--white);
+  border-radius: 14px;
+  padding: 14px 18px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  display: flex; align-items: center; gap: 10px;
+  white-space: nowrap;
+  border: 1px solid var(--border-light);
+  animation: floatUp 3s ease-in-out infinite;
+}
+.hero-float-2 {
+  position: absolute;
+  bottom: 30px; left: -30px;
+  background: var(--white);
+  border-radius: 14px;
+  padding: 14px 18px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  display: flex; align-items: center; gap: 10px;
+  border: 1px solid var(--border-light);
+  animation: floatUp 3s 1.5s ease-in-out infinite;
+}
+.hero-float-3 {
+  position: absolute;
+  top: 50%; right: -40px;
+  transform: translateY(-50%);
+  background: var(--gold);
+  border-radius: 14px;
+  padding: 14px 18px;
+  box-shadow: 0 12px 40px rgba(200,169,106,0.4);
+  animation: floatUp 3s 0.8s ease-in-out infinite;
+}
+@keyframes floatUp {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.hero-float-3 { transform-origin: center; }
+.hero-float-3:nth-child(n) { animation: floatUp2 3s 0.8s ease-in-out infinite; }
+@keyframes floatUp2 {
+  0%,100% { transform: translateY(-50%); }
+  50% { transform: translateY(calc(-50% - 10px)); }
+}
+.float-icon { font-size: 20px; }
+.float-label { font-size: 11px; color: var(--text-light); font-weight: 500; }
+.float-val { font-size: 14px; font-weight: 700; color: var(--text-dark); }
+.float-3-val { font-size: 18px; font-weight: 700; color: var(--black); }
+.float-3-label { font-size: 10px; color: rgba(0,0,0,0.5); }
 
-  /* ─── WHY US ─── */
-  .why {
-    padding: 100px 5%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .why-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-  .why-left .section-desc { margin-bottom: 36px; }
-  .stats-row {
-    display: flex; gap: 40px; flex-wrap: wrap;
-  }
-  .stat {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .stat.visible { opacity: 1; transform: translateY(0); }
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 48px;
-    font-weight: 300;
-    color: var(--gold-dark);
-    line-height: 1;
-    display: block;
-  }
-  .stat-label {
-    font-size: 12px;
-    color: var(--ink-light);
-    letter-spacing: 0.05em;
-  }
-  .why-right {
-    display: grid;
-    gap: 2px;
-    background: var(--border);
-  }
-  .why-item {
-    background: var(--warm-white);
-    padding: 28px 28px;
-    display: flex; gap: 20px; align-items: flex-start;
-    opacity: 0;
-    transform: translateX(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .why-item.visible { opacity: 1; transform: translateX(0); }
-  .why-icon {
-    width: 40px; height: 40px;
-    border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-    color: var(--gold-dark);
-  }
-  .why-text h4 {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink);
-    margin-bottom: 4px;
-  }
-  .why-text p {
-    font-size: 13px;
-    color: var(--ink-light);
-    line-height: 1.65;
-  }
+@keyframes heroIn { to { opacity: 1; transform: none; } }
 
-  /* ─── CONTACT ─── */
-  .contact {
-    padding: 100px 5%;
-    background: linear-gradient(135deg, #F5EFE4 0%, #EDE4D4 100%);
-    position: relative;
-    overflow: hidden;
-  }
-  .contact::before {
-    content: '"';
-    position: absolute;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 400px;
-    color: rgba(201,169,110,0.06);
-    top: -80px; right: 5%;
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-  }
-  .contact-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-  .contact-left .section-desc { margin-bottom: 48px; }
-  .contact-links {
-    display: flex; flex-direction: column; gap: 4px;
-  }
-  .contact-item {
-    display: flex; align-items: center; gap: 16px;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-    text-decoration: none;
-    color: inherit;
-    transition: gap 0.3s ease;
-    opacity: 0;
-    transform: translateX(-20px);
-    transition: opacity 0.5s ease, transform 0.5s ease, gap 0.3s ease;
-  }
-  .contact-item.visible { opacity: 1; transform: translateX(0); }
-  .contact-item:hover { gap: 24px; }
-  .contact-icon {
-    width: 44px; height: 44px;
-    background: var(--ink);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--gold);
-    font-size: 16px;
-    border-radius: 2px;
-    flex-shrink: 0;
-    transition: background 0.3s;
-  }
-  .contact-item:hover .contact-icon { background: var(--gold-dark); color: white; }
-  .contact-text {
-    flex: 1;
-  }
-  .contact-text small {
-    display: block;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold-dark);
-    margin-bottom: 2px;
-  }
-  .contact-text strong {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--ink);
-  }
-  .contact-arrow { color: var(--gold-dark); font-size: 18px; }
+/* Scroll indicator */
+.hero-scroll {
+  position: absolute;
+  bottom: 40px; left: 5%;
+  display: flex; align-items: center; gap: 12px;
+  opacity: 0; animation: heroIn 0.8s 1.5s forwards;
+}
+.scroll-pill {
+  width: 30px; height: 50px;
+  border: 1.5px solid rgba(0,0,0,0.15);
+  border-radius: 15px;
+  position: relative;
+}
+.scroll-dot {
+  width: 5px; height: 5px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: absolute;
+  left: 50%; top: 8px;
+  transform: translateX(-50%);
+  animation: scrollBob 2s ease-in-out infinite;
+}
+@keyframes scrollBob {
+  0%,100% { top: 8px; opacity: 1; }
+  100% { top: 28px; opacity: 0; }
+}
+.scroll-text { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-light); }
 
-  .contact-right {
-    background: var(--ink);
-    padding: 48px 44px;
-    position: relative;
-  }
-  .contact-right h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 32px;
-    font-weight: 300;
-    color: var(--cream);
-    margin-bottom: 8px;
-  }
-  .contact-right p {
-    font-size: 13px;
-    color: rgba(250,247,242,0.5);
-    margin-bottom: 36px;
-  }
-  .form-group {
-    margin-bottom: 20px;
-  }
-  .form-group label {
-    display: block;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 8px;
-  }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    width: 100%;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,169,110,0.2);
-    color: var(--cream);
-    padding: 12px 16px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13.5px;
-    outline: none;
-    transition: border-color 0.3s;
-    border-radius: 0;
-    appearance: none;
-  }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
-    border-color: var(--gold);
-    background: rgba(201,169,110,0.06);
-  }
-  .form-group select option { background: #211C17; color: var(--cream); }
-  .form-group textarea { resize: none; height: 80px; }
-  .form-submit {
-    width: 100%;
-    padding: 14px;
-    background: var(--gold);
-    color: var(--ink);
-    border: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
-  }
-  .form-submit:hover { background: var(--gold-dark); color: white; transform: translateY(-2px); }
-  .form-submit:active { transform: translateY(0); }
+/* ═══════════════════════════════════════════════
+   MARQUEE TICKER
+═══════════════════════════════════════════════ */
+.ticker {
+  background: var(--black);
+  padding: 16px 0;
+  overflow: hidden;
+  position: relative;
+}
+.ticker-track {
+  display: flex; gap: 0;
+  animation: ticker 25s linear infinite;
+  width: max-content;
+}
+.ticker-item {
+  display: flex; align-items: center; gap: 32px;
+  padding: 0 32px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  white-space: nowrap;
+}
+.ticker-item .sep {
+  color: var(--gold);
+  font-size: 8px;
+}
+@keyframes ticker { to { transform: translateX(-50%); } }
 
-  /* ─── FOOTER ─── */
-  footer {
-    background: #0E0C09;
-    padding: 40px 5%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  .footer-logo img { height: 36px; width: auto; opacity: 0.8; }
-  .footer-copy {
-    font-size: 12px;
-    color: rgba(250,247,242,0.3);
-    letter-spacing: 0.05em;
-  }
-  .footer-links {
-    display: flex; gap: 24px;
-  }
-  .footer-links a {
-    font-size: 12px;
-    color: rgba(250,247,242,0.35);
-    text-decoration: none;
-    letter-spacing: 0.08em;
-    transition: color 0.2s;
-  }
-  .footer-links a:hover { color: var(--gold); }
+/* ═══════════════════════════════════════════════
+   ABOUT / INTRO STRIP
+═══════════════════════════════════════════════ */
+.about-strip {
+  padding: 100px 5%;
+  background: var(--off-white);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  max-width: 100%;
+}
+.about-left { position: relative; }
+.about-img-wrap {
+  position: relative;
+}
+.about-img-box {
+  background: var(--light-bg);
+  border-radius: 16px;
+  padding: 60px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.about-img-box::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 30% 70%, rgba(200,169,106,0.12) 0%, transparent 60%);
+}
+.about-big-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 100px;
+  font-weight: 700;
+  color: rgba(200,169,106,0.12);
+  line-height: 1;
+  position: absolute;
+  bottom: 20px; right: 30px;
+}
+.about-badge {
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 110px; height: 110px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  box-shadow: 0 12px 40px rgba(200,169,106,0.4);
+}
+.about-badge-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; font-weight: 700;
+  color: var(--black); line-height: 1;
+}
+.about-badge-txt { font-size: 10px; font-weight: 600; color: rgba(0,0,0,0.55); text-align: center; }
 
-  /* ─── FLOATING BADGE ─── */
-  .float-badge {
-    position: fixed;
-    bottom: 32px; right: 32px;
-    z-index: 200;
-    width: 56px; height: 56px;
-    background: var(--ink);
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    box-shadow: var(--shadow-lg);
-    transition: transform 0.3s, background 0.3s;
-    text-decoration: none;
-  }
-  .float-badge:hover { transform: scale(1.1) rotate(-10deg); background: var(--gold-dark); }
-  .float-badge svg { width: 22px; height: 22px; fill: var(--gold); }
-  .float-badge:hover svg { fill: white; }
+.about-icon-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; padding: 20px 0;
+  position: relative;
+}
+.about-icon-card {
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 24px 20px;
+  transition: var(--transition);
+}
+.about-icon-card:hover { border-color: var(--gold); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(200,169,106,0.12); }
+.aic-icon { font-size: 28px; margin-bottom: 10px; }
+.aic-title { font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 4px; }
+.aic-desc { font-size: 11.5px; color: var(--text-light); line-height: 1.6; }
 
-  /* ─── TOAST ─── */
-  .toast {
-    position: fixed;
-    bottom: 100px; right: 32px;
-    background: var(--ink);
-    color: var(--cream);
-    padding: 12px 20px;
-    font-size: 13px;
-    border-left: 3px solid var(--gold);
-    z-index: 9999;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.3s, transform 0.3s;
-    pointer-events: none;
-  }
-  .toast.show { opacity: 1; transform: translateY(0); }
+.about-right {}
+.eyebrow {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 12px;
+}
+.eyebrow::before { content: ''; width: 30px; height: 1.5px; background: var(--gold); }
 
-  /* ─── MOBILE ─── */
-  @media (max-width: 900px) {
-    .nav-links { display: none; }
-    .pricing-grid { grid-template-columns: 1fr; }
-    .why-grid { grid-template-columns: 1fr; gap: 48px; }
-    .contact-inner { grid-template-columns: 1fr; gap: 48px; }
-    .plan.featured.visible { transform: none; }
-    .cursor, .cursor-ring { display: none; }
-  }
-  @media (max-width: 600px) {
-    .services-grid { grid-template-columns: 1fr; }
-    .hero-logo img { height: 56px; }
-    .float-badge { bottom: 20px; right: 20px; }
-  }
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(34px, 4vw, 52px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+.section-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+.section-title .stroke {
+  -webkit-text-stroke: 2px var(--text-dark);
+  color: transparent;
+}
+
+.about-text {
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text-mid);
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+.about-highlight {
+  padding: 20px 24px;
+  border-left: 3px solid var(--gold);
+  background: rgba(200,169,106,0.06);
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-style: italic;
+  color: var(--text-dark);
+  margin: 28px 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.about-stats-row {
+  display: flex; gap: 32px; flex-wrap: wrap;
+  margin-top: 36px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border-light);
+}
+.a-stat {}
+.a-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px; font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.a-stat-num span { color: var(--gold); }
+.a-stat-label { font-size: 12px; color: var(--text-light); letter-spacing: 0.04em; }
+
+/* ═══════════════════════════════════════════════
+   SERVICES — WHITE
+═══════════════════════════════════════════════ */
+.services {
+  padding: 100px 5%;
+  background: var(--white);
+}
+.services-inner { max-width: 1280px; margin: 0 auto; }
+.section-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 60px;
+  gap: 32px; flex-wrap: wrap;
+}
+.section-header-right { font-size: 14px; color: var(--text-light); max-width: 320px; line-height: 1.8; }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.service-card {
+  background: var(--off-white);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 36px 30px;
+  position: relative; overflow: hidden;
+  transition: var(--transition);
+  group: true;
+}
+.service-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.service-card:hover { background: var(--white); border-color: rgba(200,169,106,0.4); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
+.service-card:hover::after { transform: scaleX(1); }
+
+.sc-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px; font-weight: 700;
+  color: rgba(200,169,106,0.15);
+  line-height: 1; margin-bottom: 20px;
+  transition: color 0.3s;
+}
+.service-card:hover .sc-num { color: rgba(200,169,106,0.3); }
+.sc-icon {
+  width: 48px; height: 48px;
+  background: var(--black);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+  transition: background 0.3s;
+}
+.service-card:hover .sc-icon { background: var(--gold); }
+.sc-title { font-size: 17px; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; }
+.sc-desc { font-size: 13.5px; color: var(--text-light); line-height: 1.75; margin-bottom: 20px; }
+.sc-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--gold-dark);
+  transition: gap 0.2s;
+}
+.sc-link:hover { gap: 12px; }
+
+/* ═══════════════════════════════════════════════
+   PROCESS — BLACK
+═══════════════════════════════════════════════ */
+.process {
+  padding: 100px 5%;
+  background: var(--dark-bg);
+  position: relative; overflow: hidden;
+}
+.process::before {
+  content: '';
+  position: absolute;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(200,169,106,0.06) 0%, transparent 70%);
+  top: -200px; left: -200px;
+  pointer-events: none;
+}
+.process::after {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(200,169,106,0.04) 0%, transparent 70%);
+  bottom: -200px; right: -100px;
+  pointer-events: none;
+}
+.process-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+.process .eyebrow { color: var(--gold); }
+.process .eyebrow::before { background: var(--gold); }
+.process .section-title { color: var(--text-cream); }
+
+.process-steps {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 60px;
+  position: relative;
+}
+.process-steps::before {
+  content: '';
+  position: absolute;
+  top: 32px; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-dark), var(--gold), var(--border-dark), transparent);
+}
+.process-step {
+  padding: 0 24px;
+  text-align: center;
+}
+.ps-num {
+  width: 64px; height: 64px;
+  border: 1.5px solid var(--border-dark);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--gold);
+  margin: 0 auto 28px;
+  background: var(--dark-bg);
+  position: relative; z-index: 1;
+  transition: var(--transition);
+}
+.process-step:hover .ps-num {
+  background: var(--gold); color: var(--black);
+  border-color: var(--gold);
+  transform: scale(1.1);
+  box-shadow: 0 0 40px rgba(200,169,106,0.4);
+}
+.ps-title { font-size: 16px; font-weight: 700; color: var(--text-cream); margin-bottom: 10px; }
+.ps-desc { font-size: 13px; color: var(--text-cream-dim); line-height: 1.7; }
+
+/* ═══════════════════════════════════════════════
+   SOCIAL PROOF — WHITE
+═══════════════════════════════════════════════ */
+.social-proof {
+  padding: 100px 5%;
+  background: var(--off-white);
+}
+.social-proof-inner { max-width: 1280px; margin: 0 auto; }
+.testimonials-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; margin-top: 60px;
+}
+.testi-card {
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 36px 30px;
+  transition: var(--transition);
+  position: relative;
+}
+.testi-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); border-color: rgba(200,169,106,0.3); }
+.testi-card.featured-t {
+  background: var(--black);
+  border-color: var(--border-dark);
+  grid-row: span 1;
+}
+.testi-stars { display: flex; gap: 3px; margin-bottom: 20px; }
+.testi-star { color: var(--gold); font-size: 14px; }
+.testi-quote {
+  font-size: 15px; line-height: 1.8;
+  color: var(--text-mid);
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+.testi-card.featured-t .testi-quote { color: var(--text-cream-dim); }
+.testi-quote::before { content: '"'; font-size: 40px; color: var(--gold); line-height: 0; vertical-align: -20px; margin-right: 4px; }
+.testi-author { display: flex; align-items: center; gap: 12px; }
+.ta-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--light-bg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700;
+  color: var(--text-mid);
+  flex-shrink: 0;
+}
+.testi-card.featured-t .ta-avatar { background: rgba(200,169,106,0.15); color: var(--gold); }
+.ta-name { font-size: 14px; font-weight: 700; color: var(--text-dark); }
+.testi-card.featured-t .ta-name { color: var(--text-cream); }
+.ta-role { font-size: 12px; color: var(--text-light); }
+.testi-card.featured-t .ta-role { color: var(--text-cream-dim); }
+.testi-result {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px;
+  background: rgba(200,169,106,0.1);
+  border: 1px solid var(--border-gold);
+  border-radius: 100px;
+  font-size: 11px; font-weight: 600;
+  color: var(--gold-dark);
+  margin-bottom: 16px;
+}
+.testi-card.featured-t .testi-result { background: rgba(200,169,106,0.15); color: var(--gold-2); }
+
+/* Social logos / clients */
+.client-logos {
+  margin-top: 70px;
+  text-align: center;
+}
+.client-logos p {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 32px;
+}
+.logo-track {
+  display: flex; align-items: center; justify-content: center;
+  gap: 48px; flex-wrap: wrap;
+}
+.logo-item {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700;
+  color: rgba(0,0,0,0.12);
+  transition: color 0.3s;
+  letter-spacing: 0.04em;
+}
+.logo-item:hover { color: rgba(0,0,0,0.3); }
+
+/* ═══════════════════════════════════════════════
+   PRICING — BLACK
+═══════════════════════════════════════════════ */
+.pricing {
+  padding: 100px 5%;
+  background: var(--black);
+  position: relative; overflow: hidden;
+}
+.pricing::before {
+  content: '';
+  position: absolute;
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(200,169,106,0.05) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.pricing-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+.pricing-header { text-align: center; margin-bottom: 64px; }
+.pricing .eyebrow { justify-content: center; color: var(--gold); }
+.pricing .eyebrow::before { background: var(--gold); }
+.pricing .section-title { color: var(--text-cream); }
+
+.pricing-toggle {
+  display: inline-flex; align-items: center;
+  gap: 0;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border-dark);
+  border-radius: 8px;
+  padding: 4px;
+  margin-top: 24px;
+}
+.toggle-btn {
+  padding: 8px 20px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-cream-dim);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.toggle-btn.active {
+  background: var(--gold); color: var(--black);
+}
+
+.plans-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: rgba(200,169,106,0.1);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.plan {
+  background: var(--dark-card);
+  padding: 48px 36px;
+  position: relative;
+  transition: var(--transition);
+}
+.plan:hover { background: #221E16; }
+.plan.featured-plan { background: #1F1A10; }
+.plan.featured-plan:hover { background: #261F11; }
+
+.plan-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px;
+  background: var(--gold);
+  color: var(--black);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  border-radius: 100px;
+  margin-bottom: 20px;
+}
+.plan-icon { font-size: 32px; margin-bottom: 16px; }
+.plan-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; font-weight: 700;
+  color: var(--text-cream);
+  margin-bottom: 6px;
+}
+.plan-tagline { font-size: 13px; color: var(--text-cream-dim); margin-bottom: 32px; line-height: 1.6; }
+.plan-price {
+  margin-bottom: 36px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border-dark);
+}
+.price-amt {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px; font-weight: 700;
+  color: var(--gold); line-height: 1;
+}
+.price-curr {
+  font-size: 22px; vertical-align: top;
+  margin-top: 10px; display: inline-block;
+  color: var(--gold-dark);
+}
+.price-period { font-size: 12px; color: var(--text-cream-dim); margin-top: 6px; letter-spacing: 0.06em; }
+.plan-features { margin-bottom: 36px; }
+.plan-feature {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 13.5px; color: rgba(248,244,238,0.75);
+  line-height: 1.5;
+}
+.plan-feature-icon {
+  width: 20px; height: 20px;
+  background: rgba(200,169,106,0.15);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: var(--gold);
+  flex-shrink: 0; margin-top: 2px;
+}
+.plan-cta {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 15px 24px;
+  border: 1.5px solid var(--border-dark);
+  color: var(--gold-light, #E4C98A);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  border-radius: var(--radius);
+  transition: var(--transition);
+  position: relative; overflow: hidden;
+}
+.plan-cta::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--gold);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+.plan-cta span, .plan-cta svg { position: relative; z-index: 1; }
+.plan-cta:hover::before { transform: translateX(0); }
+.plan-cta:hover { color: var(--black); border-color: var(--gold); transform: translateY(-2px); }
+.featured-plan .plan-cta {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--black);
+}
+.featured-plan .plan-cta::before { background: var(--gold-dark); }
+.featured-plan .plan-cta:hover { color: var(--white); }
+
+.pricing-note {
+  text-align: center; margin-top: 32px;
+  font-size: 13px; color: var(--text-cream-dim);
+  display: flex; align-items: center; justify-content: center; gap: 20px;
+  flex-wrap: wrap;
+}
+.pricing-note span { display: flex; align-items: center; gap: 6px; }
+
+/* ═══════════════════════════════════════════════
+   RESULTS — WHITE
+═══════════════════════════════════════════════ */
+.results {
+  padding: 100px 5%;
+  background: var(--white);
+}
+.results-inner { max-width: 1280px; margin: 0 auto; }
+
+.results-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center; margin-top: 60px;
+}
+.results-left {}
+.result-item {
+  display: flex; gap: 24px; align-items: flex-start;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.result-item:first-child { border-top: 1px solid var(--border-light); }
+.ri-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px; font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  min-width: 110px;
+}
+.ri-content {}
+.ri-title { font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+.ri-desc { font-size: 13.5px; color: var(--text-light); line-height: 1.7; }
+
+.results-right {
+  background: var(--black);
+  border-radius: 20px;
+  padding: 48px 40px;
+  position: relative; overflow: hidden;
+}
+.results-right::before {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(200,169,106,0.1) 0%, transparent 70%);
+  top: -150px; right: -150px;
+}
+.rr-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px; font-weight: 700;
+  color: var(--text-cream);
+  margin-bottom: 4px; position: relative;
+}
+.rr-sub { font-size: 13px; color: var(--text-cream-dim); margin-bottom: 36px; position: relative; }
+
+.growth-bars { position: relative; }
+.g-bar-item { margin-bottom: 24px; position: relative; }
+.g-bar-info { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.g-bar-label { font-size: 13px; color: var(--text-cream); font-weight: 500; }
+.g-bar-val { font-size: 14px; font-weight: 700; color: var(--gold); }
+.g-bar-track { height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+.g-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold-2));
+  border-radius: 3px;
+  animation: barFill 1.5s 1.5s both cubic-bezier(0.22,1,0.36,1);
+}
+.g-bar-item:nth-child(2) .g-bar-fill { animation-delay: 1.7s; }
+.g-bar-item:nth-child(3) .g-bar-fill { animation-delay: 1.9s; }
+.g-bar-item:nth-child(4) .g-bar-fill { animation-delay: 2.1s; }
+
+.rr-divider { height: 1px; background: var(--border-dark); margin: 28px 0; position: relative; }
+.rr-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; position: relative; }
+.rr-mini-stat {}
+.rr-mini-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px; font-weight: 700;
+  color: var(--gold); line-height: 1;
+}
+.rr-mini-label { font-size: 11.5px; color: var(--text-cream-dim); margin-top: 4px; }
+
+/* ═══════════════════════════════════════════════
+   FAQ
+═══════════════════════════════════════════════ */
+.faq {
+  padding: 100px 5%;
+  background: var(--off-white);
+}
+.faq-inner { max-width: 1280px; margin: 0 auto; }
+.faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 60px; align-items: start; }
+.faq-left {}
+.faq-cta-box {
+  background: var(--black);
+  border-radius: 16px;
+  padding: 40px 36px;
+  margin-top: 40px;
+  position: relative; overflow: hidden;
+}
+.faq-cta-box::before {
+  content: '?';
+  font-family: 'Playfair Display', serif;
+  font-size: 200px; font-weight: 700;
+  color: rgba(200,169,106,0.05);
+  position: absolute; right: 20px; bottom: -30px;
+  line-height: 1;
+}
+.faq-cta-box h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px; font-weight: 700;
+  color: var(--text-cream);
+  margin-bottom: 10px; position: relative;
+}
+.faq-cta-box p { font-size: 14px; color: var(--text-cream-dim); margin-bottom: 24px; position: relative; }
+.faq-cta-box .btn-gold {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px;
+  background: var(--gold);
+  color: var(--black);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  border-radius: var(--radius);
+  transition: var(--transition);
+  position: relative;
+}
+.faq-cta-box .btn-gold:hover { background: var(--gold-2); transform: translateY(-2px); }
+
+.faq-right {}
+.faq-item {
+  border-bottom: 1px solid var(--border-light);
+  overflow: hidden;
+}
+.faq-q {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 0;
+  cursor: pointer;
+  gap: 16px;
+}
+.faq-q-text { font-size: 15px; font-weight: 600; color: var(--text-dark); line-height: 1.4; }
+.faq-toggle {
+  width: 32px; height: 32px;
+  border: 1.5px solid var(--border-light);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: var(--text-mid);
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+.faq-item.open .faq-toggle { background: var(--gold); border-color: var(--gold); color: var(--black); transform: rotate(45deg); }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+}
+.faq-item.open .faq-a { max-height: 200px; }
+.faq-a p {
+  padding-bottom: 22px;
+  font-size: 14px; color: var(--text-light);
+  line-height: 1.8; font-weight: 300;
+}
+
+/* ═══════════════════════════════════════════════
+   CONTACT — BLACK
+═══════════════════════════════════════════════ */
+.contact {
+  padding: 100px 5%;
+  background: var(--dark-bg);
+  position: relative; overflow: hidden;
+}
+.contact::after {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(200,169,106,0.06) 0%, transparent 70%);
+  bottom: -200px; right: -200px;
+  pointer-events: none;
+}
+.contact-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+.contact .eyebrow { color: var(--gold); }
+.contact .eyebrow::before { background: var(--gold); }
+.contact .section-title { color: var(--text-cream); }
+
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 60px; }
+
+.contact-info {}
+.contact-info-text { font-size: 15px; line-height: 1.9; color: var(--text-cream-dim); margin-bottom: 40px; font-weight: 300; }
+
+.contact-methods { display: flex; flex-direction: column; gap: 4px; }
+.contact-method {
+  display: flex; align-items: center; gap: 18px;
+  padding: 20px 24px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border-dark);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: var(--transition);
+  group: true;
+}
+.contact-method:hover { background: rgba(200,169,106,0.06); border-color: var(--border-gold); transform: translateX(6px); }
+.cm-icon {
+  width: 48px; height: 48px;
+  background: rgba(200,169,106,0.1);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+.contact-method:hover .cm-icon { background: var(--gold); }
+.cm-text {}
+.cm-label { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 3px; }
+.cm-value { font-size: 14px; font-weight: 600; color: var(--text-cream); }
+.cm-arrow { margin-left: auto; color: var(--text-cream-dim); font-size: 18px; transition: transform 0.2s; }
+.contact-method:hover .cm-arrow { transform: translateX(4px); color: var(--gold); }
+
+.contact-form {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border-dark);
+  border-radius: 20px;
+  padding: 48px 44px;
+}
+.cf-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px; font-weight: 700;
+  color: var(--text-cream);
+  margin-bottom: 6px;
+}
+.cf-sub { font-size: 13px; color: var(--text-cream-dim); margin-bottom: 36px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { margin-bottom: 20px; }
+.form-group label {
+  display: block;
+  font-size: 10.5px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-dark);
+  color: var(--text-cream);
+  padding: 13px 16px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s, background 0.3s;
+  border-radius: 8px;
+  appearance: none;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: rgba(255,255,255,0.2); }
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--gold); background: rgba(200,169,106,0.05); }
+.form-group select option { background: #1A1712; color: var(--text-cream); }
+.form-group textarea { resize: none; height: 100px; }
+.form-submit {
+  width: 100%;
+  padding: 15px;
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: var(--transition);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.form-submit:hover { background: var(--gold-2); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(200,169,106,0.3); }
+.form-submit:active { transform: translateY(0); }
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════ */
+footer {
+  background: #070604;
+  padding: 60px 5% 32px;
+}
+.footer-top {
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 60px; margin-bottom: 60px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.footer-brand {}
+.footer-logo {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px;
+}
+.footer-logo img { height: 52px; width: auto; }
+.footer-logo-text {
+  display: none;
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--text-cream);
+}
+.footer-tagline { font-size: 13.5px; color: rgba(255,255,255,0.35); line-height: 1.7; max-width: 240px; margin-bottom: 24px; }
+.footer-socials { display: flex; gap: 10px; }
+.footer-social {
+  width: 38px; height: 38px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; color: rgba(255,255,255,0.35);
+  transition: var(--transition);
+}
+.footer-social:hover { background: var(--gold); border-color: var(--gold); color: var(--black); transform: translateY(-3px); }
+
+.footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 20px; }
+.footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul li a {
+  font-size: 13.5px; color: rgba(255,255,255,0.35);
+  transition: color 0.2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.footer-col ul li a::before { content: '↗'; font-size: 10px; opacity: 0; transform: translateX(-4px); transition: 0.2s; }
+.footer-col ul li a:hover { color: var(--gold); }
+.footer-col ul li a:hover::before { opacity: 1; transform: none; }
+
+.footer-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+.footer-legal { display: flex; gap: 24px; }
+.footer-legal a { font-size: 12px; color: rgba(255,255,255,0.2); transition: color 0.2s; }
+.footer-legal a:hover { color: var(--gold); }
+
+/* ═══════════════════════════════════════════════
+   FLOATING WHATSAPP
+═══════════════════════════════════════════════ */
+.wa-float {
+  position: fixed; bottom: 32px; right: 32px;
+  z-index: 300;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+}
+.wa-tooltip {
+  background: var(--black);
+  color: var(--text-cream);
+  font-size: 13px; font-weight: 500;
+  padding: 10px 16px;
+  border-radius: 8px;
+  white-space: nowrap;
+  border: 1px solid var(--border-dark);
+  opacity: 0; transform: translateX(10px);
+  transition: var(--transition);
+  pointer-events: none;
+}
+.wa-btn {
+  width: 58px; height: 58px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 30px rgba(37,211,102,0.4);
+  transition: var(--transition);
+}
+.wa-btn svg { width: 28px; height: 28px; fill: white; }
+.wa-btn:hover { transform: scale(1.1); box-shadow: 0 12px 40px rgba(37,211,102,0.5); }
+.wa-float:hover .wa-tooltip { opacity: 1; transform: translateX(0); }
+
+/* ═══════════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════════ */
+.toast {
+  position: fixed; bottom: 110px; right: 32px;
+  background: var(--black);
+  color: var(--text-cream);
+  padding: 14px 20px;
+  font-size: 13px;
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  z-index: 9999;
+  opacity: 0; transform: translateY(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+
+/* ═══════════════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════════════ */
+.reveal {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.from-left { transform: translateX(-32px); }
+.reveal.from-right { transform: translateX(32px); }
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; }
+.reveal-d5 { transition-delay: 0.5s; }
+
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .hero { grid-template-columns: 1fr; text-align: center; }
+  .hero-left { order: 1; display: flex; flex-direction: column; align-items: center; }
+  .hero-right { order: 0; max-width: 500px; margin: 0 auto; }
+  .hero-trust { justify-content: center; }
+  .about-strip { grid-template-columns: 1fr; }
+  .results-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+}
+
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .process-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .process-steps::before { display: none; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .plans-grid { grid-template-columns: 1fr; }
+  .faq-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .hero-float-1, .hero-float-2, .hero-float-3 { display: none; }
+}
+
+@media (max-width: 600px) {
+  .services-grid { grid-template-columns: 1fr; }
+  .process-steps { grid-template-columns: 1fr; }
+  .about-icon-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; }
+  .hero { padding-top: calc(var(--nav-h) + 40px); }
+  .cursor-dot, .cursor-circle { display: none; }
+  body { cursor: auto; }
+  .wa-float { bottom: 20px; right: 20px; }
+  .contact-form { padding: 32px 24px; }
+}
 </style>
 </head>
 <body>
 
-<!-- Custom cursor -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-logo">Kriova Studio</div>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  <div class="loader-pct">Loading Experience...</div>
+</div>
+
+<!-- Cursor -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-circle" id="cursorCircle"></div>
 
 <!-- Toast -->
-<div class="toast" id="toast">Message sent! We'll reply soon ✦</div>
+<div class="toast" id="toast"></div>
 
-<!-- NAV -->
-<nav>
+<!-- ═══ NAV ═══ -->
+<nav id="navbar">
   <a href="#" class="nav-logo">
-    <img src="https://elitecodetechnologies.com/wp-content/uploads/2026/05/ChatGPT-Image-May-1-2026-12_34_25-PM.png" alt="Kriova Studio" onerror="this.style.display='none';this.nextSibling.style.display='block'">
-    <span style="display:none;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--ink)">Kriova Studio</span>
+    <img src="https://elitecodetechnologies.com/wp-content/uploads/2026/05/Kriova-1.png" alt="Kriova Studio" onerror="this.style.display='none';document.querySelector('.nav-logo-text').style.display='block'">
+    <span class="nav-logo-text">Kriova</span>
   </a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
     <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="mailto:acharyakrisha853@gmail.com" class="nav-cta">Get Started</a></li>
+    <li><a href="#testimonials">Results</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="https://wa.me/919313710406?text=Hi%20Krisha!%20I%27m%20interested%20in%20Kriova%20Studio%20services." target="_blank" class="nav-btn">
+      <span>Start Today</span> <span class="btn-arrow">→</span>
+    </a></li>
   </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg-circles">
-    <div class="circle circle-1"></div>
-    <div class="circle circle-2"></div>
-    <div class="circle circle-3"></div>
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#process" onclick="closeMobile()">Process</a>
+  <a href="#pricing" onclick="closeMobile()">Pricing</a>
+  <a href="#testimonials" onclick="closeMobile()">Results</a>
+  <a href="#faq" onclick="closeMobile()">FAQ</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <a href="https://wa.me/919313710406" target="_blank" class="mb-btn">Chat on WhatsApp →</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-tag">✦ Social Media & Brand Strategy</div>
+    <h1 class="hero-title">
+      Build a Brand<br>
+      That <span class="word-em">Commands</span><br>
+      <span class="stroke-text">Attention</span>
+    </h1>
+    <p class="hero-sub">Where brands find their voice</p>
+    <p class="hero-desc">We help ambitious brands grow through creative storytelling, powerful social media strategy, and stunning brand aesthetics — building an online identity that attracts attention, builds trust, and grows audiences organically.</p>
+    <div class="hero-ctas">
+      <a href="https://wa.me/919313710406?text=Hi%20Krisha!%20I%27m%20interested%20in%20growing%20my%20brand." target="_blank" class="btn-primary">
+        <span>Start Growing Today</span>
+        <span>→</span>
+      </a>
+      <a href="#pricing" class="btn-ghost">View Packages</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-avatars">
+        <div class="trust-avatar">K</div>
+        <div class="trust-avatar">R</div>
+        <div class="trust-avatar">A</div>
+        <div class="trust-avatar">M</div>
+        <div class="trust-avatar">+</div>
+      </div>
+      <div>
+        <div class="trust-stars">
+          <span class="trust-star">★</span><span class="trust-star">★</span><span class="trust-star">★</span><span class="trust-star">★</span><span class="trust-star">★</span>
+        </div>
+        <p class="trust-text"><strong>50+ brands</strong> trust Kriova Studio</p>
+      </div>
+    </div>
   </div>
-  <div class="hero-logo">
-    <img src="https://elitecodetechnologies.com/wp-content/uploads/2026/05/ChatGPT-Image-May-1-2026-12_34_25-PM.png" alt="Kriova Studio" onerror="this.style.display='none'">
+
+  <div class="hero-right">
+    <div class="hero-visual">
+      <!-- Main card -->
+      <div class="hero-card-main">
+        <div class="hc-label">Brand Performance Dashboard</div>
+        <div class="hc-title">Your Brand, Amplified</div>
+        <div class="hc-sub">Live growth metrics for @yourbrand</div>
+        <div class="hc-stats">
+          <div class="hc-stat">
+            <div class="hc-stat-num">3.2×</div>
+            <div class="hc-stat-label">Avg. Reach Growth</div>
+          </div>
+          <div class="hc-stat">
+            <div class="hc-stat-num">+847</div>
+            <div class="hc-stat-label">New Followers/Month</div>
+          </div>
+        </div>
+        <div class="hc-bar-wrap">
+          <div class="hc-bar-label"><span>Engagement Rate</span><span style="color:var(--gold)">8.4%</span></div>
+          <div class="hc-bar"><div class="hc-bar-fill" style="width:84%"></div></div>
+        </div>
+        <div class="hc-bar-wrap" style="margin-top:12px">
+          <div class="hc-bar-label"><span>Story Views</span><span style="color:var(--gold)">92%</span></div>
+          <div class="hc-bar"><div class="hc-bar-fill" style="width:92%"></div></div>
+        </div>
+        <div class="hc-bar-wrap" style="margin-top:12px">
+          <div class="hc-bar-label"><span>Profile Visits</span><span style="color:var(--gold)">67%</span></div>
+          <div class="hc-bar"><div class="hc-bar-fill" style="width:67%"></div></div>
+        </div>
+      </div>
+
+      <!-- Float 1 -->
+      <div class="hero-float-1">
+        <span class="float-icon">📈</span>
+        <div>
+          <div class="float-label">Follower Growth</div>
+          <div class="float-val">+340% this month</div>
+        </div>
+      </div>
+
+      <!-- Float 2 -->
+      <div class="hero-float-2">
+        <span class="float-icon">✅</span>
+        <div>
+          <div class="float-label">Strategy Delivered</div>
+          <div class="float-val">Week 1 complete</div>
+        </div>
+      </div>
+
+      <!-- Float 3 -->
+      <div class="hero-float-3">
+        <div class="float-3-val">100%</div>
+        <div class="float-3-label">Organic</div>
+      </div>
+    </div>
   </div>
-  <p class="hero-eyebrow">Social Media & Creative Services</p>
-  <h1 class="hero-title">Kriova<br><em>Studio</em></h1>
-  <p class="hero-subtitle">Where brands find their voice</p>
-  <p class="hero-desc">We help brands grow through creative storytelling, social media strategy, and strong brand aesthetics — building an online identity that attracts attention, builds trust, and grows audiences organically.</p>
+
+  <!-- Scroll indicator -->
   <div class="hero-scroll">
-    <span>Discover</span>
-    <div class="scroll-line"></div>
+    <div class="scroll-pill"><div class="scroll-dot"></div></div>
+    <span class="scroll-text">Scroll</span>
   </div>
 </section>
 
-<!-- DIVIDER -->
-<div class="divider">
-  <div class="divider-line"></div>
-  <div class="divider-icon">✦</div>
-  <div class="divider-line"></div>
+<!-- ═══ TICKER ═══ -->
+<div class="ticker">
+  <div class="ticker-track" id="tickerTrack">
+    <div class="ticker-item">Social Media Strategy <span class="sep">✦</span></div>
+    <div class="ticker-item">Brand Storytelling <span class="sep">✦</span></div>
+    <div class="ticker-item">Instagram Growth <span class="sep">✦</span></div>
+    <div class="ticker-item">Content Planning <span class="sep">✦</span></div>
+    <div class="ticker-item">Brand Aesthetics <span class="sep">✦</span></div>
+    <div class="ticker-item">Reel Strategy <span class="sep">✦</span></div>
+    <div class="ticker-item">Engagement Growth <span class="sep">✦</span></div>
+    <div class="ticker-item">Brand Positioning <span class="sep">✦</span></div>
+    <div class="ticker-item">Organic Growth <span class="sep">✦</span></div>
+    <!-- duplicate -->
+    <div class="ticker-item">Social Media Strategy <span class="sep">✦</span></div>
+    <div class="ticker-item">Brand Storytelling <span class="sep">✦</span></div>
+    <div class="ticker-item">Instagram Growth <span class="sep">✦</span></div>
+    <div class="ticker-item">Content Planning <span class="sep">✦</span></div>
+    <div class="ticker-item">Brand Aesthetics <span class="sep">✦</span></div>
+    <div class="ticker-item">Reel Strategy <span class="sep">✦</span></div>
+    <div class="ticker-item">Engagement Growth <span class="sep">✦</span></div>
+    <div class="ticker-item">Brand Positioning <span class="sep">✦</span></div>
+    <div class="ticker-item">Organic Growth <span class="sep">✦</span></div>
+  </div>
 </div>
 
-<!-- SERVICES -->
+<!-- ═══ ABOUT ═══ -->
+<section class="about-strip" id="about">
+  <div class="about-left reveal from-left">
+    <div class="about-img-wrap">
+      <div class="about-img-box">
+        <div class="about-icon-grid">
+          <div class="about-icon-card">
+            <div class="aic-icon">🎯</div>
+            <div class="aic-title">Strategy First</div>
+            <div class="aic-desc">Every decision rooted in data and audience insight</div>
+          </div>
+          <div class="about-icon-card">
+            <div class="aic-icon">✍️</div>
+            <div class="aic-title">Story-Driven</div>
+            <div class="aic-desc">Narratives that make your brand unforgettable</div>
+          </div>
+          <div class="about-icon-card">
+            <div class="aic-icon">🎨</div>
+            <div class="aic-title">Aesthetic Excellence</div>
+            <div class="aic-desc">Visual identity that stops the scroll</div>
+          </div>
+          <div class="about-icon-card">
+            <div class="aic-icon">📊</div>
+            <div class="aic-title">Results Focused</div>
+            <div class="aic-desc">Measurable growth you can actually see</div>
+          </div>
+        </div>
+        <div class="about-big-num">K</div>
+      </div>
+      <div class="about-badge">
+        <div class="about-badge-num">50+</div>
+        <div class="about-badge-txt">Brands<br>Served</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-right reveal">
+    <div class="eyebrow">About Kriova Studio</div>
+    <h2 class="section-title">We Don't Just Manage<br>Accounts — We Build <em>Empires</em></h2>
+    <p class="about-text">Kriova Studio is a boutique social media and brand strategy studio founded with one mission: to help brands go from invisible to irresistible. We work with entrepreneurs, startups, and growing businesses who are ready to take their online presence seriously.</p>
+    <div class="about-highlight">"Your brand is a story. We make it one people can't stop reading."</div>
+    <p class="about-text">Every strategy we create is built around authentic connection — not tricks, not hacks. We combine creative storytelling with data-backed strategy to build brands that people genuinely love and follow.</p>
+    <div class="about-stats-row">
+      <div class="a-stat reveal-d1 reveal">
+        <div class="a-stat-num">50<span>+</span></div>
+        <div class="a-stat-label">Brands Served</div>
+      </div>
+      <div class="a-stat reveal-d2 reveal">
+        <div class="a-stat-num">3<span>×</span></div>
+        <div class="a-stat-label">Avg. Growth</div>
+      </div>
+      <div class="a-stat reveal-d3 reveal">
+        <div class="a-stat-num">100<span>%</span></div>
+        <div class="a-stat-label">Organic Focus</div>
+      </div>
+      <div class="a-stat reveal-d4 reveal">
+        <div class="a-stat-num">2<span>yrs</span></div>
+        <div class="a-stat-label">Experience</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
 <section class="services" id="services">
-  <div class="services-header">
-    <div>
-      <span class="section-label">What we do</span>
-      <h2 class="section-title">Our <em>Services</em></h2>
+  <div class="services-inner">
+    <div class="section-header">
+      <div>
+        <div class="eyebrow reveal">What We Offer</div>
+        <h2 class="section-title reveal reveal-d1">Services Built for <em>Real</em> Growth</h2>
+      </div>
+      <p class="section-header-right reveal">Every service is crafted to build a brand that doesn't just exist online — it commands attention, builds trust, and converts followers into loyal fans.</p>
     </div>
-    <p class="section-desc">Every service is crafted to build a brand that doesn't just exist online — it commands attention.</p>
-  </div>
-  <div class="services-grid">
-    <div class="service-card">
-      <div class="service-num">01</div>
-      <h3 class="service-name">Social Media Strategy</h3>
-      <p class="service-desc">Audience research, content direction, brand positioning, and monthly strategy planning tailored to your goals.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-num">02</div>
-      <h3 class="service-name">Content Planning</h3>
-      <p class="service-desc">Weekly and monthly content calendars with reel ideas, storytelling hooks, and post concepts that convert.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-num">03</div>
-      <h3 class="service-name">Brand Storytelling</h3>
-      <p class="service-desc">Narrative-driven content that helps brands emotionally connect with their audience and build lasting loyalty.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-num">04</div>
-      <h3 class="service-name">Instagram Growth Strategy</h3>
-      <p class="service-desc">Profile optimization, hashtag research, posting strategy, and engagement improvement for organic growth.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-num">05</div>
-      <h3 class="service-name">Brand Aesthetics</h3>
-      <p class="service-desc">Visual direction for posts, reels, and page layout to build a recognizable and magnetic identity.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-num">06</div>
-      <h3 class="service-name">Creative Content Ideas</h3>
-      <p class="service-desc">High-performing reel concepts, carousel ideas, hooks, and content experiments designed to go viral.</p>
+    <div class="services-grid">
+      <div class="service-card reveal reveal-d1">
+        <div class="sc-num">01</div>
+        <div class="sc-icon">🎯</div>
+        <h3 class="sc-title">Social Media Strategy</h3>
+        <p class="sc-desc">Deep audience research, content direction, brand positioning, and comprehensive monthly strategy planning tailored precisely to your goals and growth targets.</p>
+        <span class="sc-link">Learn More →</span>
+      </div>
+      <div class="service-card reveal reveal-d2">
+        <div class="sc-num">02</div>
+        <div class="sc-icon">📅</div>
+        <h3 class="sc-title">Content Planning & Calendars</h3>
+        <p class="sc-desc">Weekly and monthly content calendars with powerful reel ideas, storytelling hooks, carousel concepts, and post templates designed to maximize engagement and conversions.</p>
+        <span class="sc-link">Learn More →</span>
+      </div>
+      <div class="service-card reveal reveal-d3">
+        <div class="sc-num">03</div>
+        <div class="sc-icon">✍️</div>
+        <h3 class="sc-title">Brand Storytelling</h3>
+        <p class="sc-desc">Narrative-driven content strategy that helps your brand emotionally connect with its audience. We craft stories that build genuine relationships and lasting brand loyalty.</p>
+        <span class="sc-link">Learn More →</span>
+      </div>
+      <div class="service-card reveal reveal-d1">
+        <div class="sc-num">04</div>
+        <div class="sc-icon">📱</div>
+        <h3 class="sc-title">Instagram Growth Strategy</h3>
+        <p class="sc-desc">Complete profile optimization, in-depth hashtag research, strategic posting schedules, and proven engagement improvement tactics for consistent, sustainable organic growth.</p>
+        <span class="sc-link">Learn More →</span>
+      </div>
+      <div class="service-card reveal reveal-d2">
+        <div class="sc-num">05</div>
+        <div class="sc-icon">🎨</div>
+        <h3 class="sc-title">Brand Aesthetics & Visual Identity</h3>
+        <p class="sc-desc">Expert visual direction for posts, reels, stories, and page layout. We craft a cohesive, magnetic aesthetic that makes your brand instantly recognizable and irresistibly beautiful.</p>
+        <span class="sc-link">Learn More →</span>
+      </div>
+      <div class="service-card reveal reveal-d3">
+        <div class="sc-num">06</div>
+        <div class="sc-icon">🚀</div>
+        <h3 class="sc-title">Viral Content Concepts</h3>
+        <p class="sc-desc">High-performing reel concepts, scroll-stopping carousel ideas, powerful hooks, and data-backed content experiments designed to maximize reach and drive viral potential.</p>
+        <span class="sc-link">Learn More →</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- DIVIDER -->
-<div class="divider">
-  <div class="divider-line"></div>
-  <div class="divider-icon">◆</div>
-  <div class="divider-line"></div>
-</div>
+<!-- ═══ PROCESS ═══ -->
+<section class="process" id="process">
+  <div class="process-inner">
+    <div class="eyebrow reveal">How It Works</div>
+    <h2 class="section-title reveal reveal-d1">Our <em>Proven</em> 4-Step Process</h2>
+    <div class="process-steps">
+      <div class="process-step reveal reveal-d1">
+        <div class="ps-num">01</div>
+        <h3 class="ps-title">Discovery & Audit</h3>
+        <p class="ps-desc">We deep-dive into your brand, audience, competitors, and current performance to understand exactly where you stand and where you need to go.</p>
+      </div>
+      <div class="process-step reveal reveal-d2">
+        <div class="ps-num">02</div>
+        <h3 class="ps-title">Strategy Creation</h3>
+        <p class="ps-desc">We build a comprehensive, customized growth roadmap — content pillars, storytelling frameworks, aesthetic guidelines, and posting strategy tailored to your brand.</p>
+      </div>
+      <div class="process-step reveal reveal-d3">
+        <div class="ps-num">03</div>
+        <h3 class="ps-title">Execution & Delivery</h3>
+        <p class="ps-desc">Content calendars, reel ideas, captions, hooks, and growth tactics are delivered each month — ready for you to implement with confidence.</p>
+      </div>
+      <div class="process-step reveal reveal-d4">
+        <div class="ps-num">04</div>
+        <h3 class="ps-title">Review & Optimize</h3>
+        <p class="ps-desc">Monthly performance reviews, data analysis, and strategy refinement ensure your growth is continuous, compounding, and always improving.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-<!-- PRICING -->
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="social-proof" id="testimonials">
+  <div class="social-proof-inner">
+    <div class="eyebrow reveal">Client Results</div>
+    <h2 class="section-title reveal reveal-d1">Real Brands. <em>Real Results.</em></h2>
+    <div class="testimonials-grid">
+      <div class="testi-card reveal reveal-d1">
+        <div class="testi-result">📈 +280% Followers in 60 Days</div>
+        <div class="testi-stars">
+          <span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span>
+        </div>
+        <p class="testi-quote">Kriova completely transformed how we show up online. The strategy was so clear, so intentional — our engagement tripled in two months and we started getting DMs from customers saying they love our vibe.</p>
+        <div class="testi-author">
+          <div class="ta-avatar">R</div>
+          <div>
+            <div class="ta-name">Riya Shah</div>
+            <div class="ta-role">Founder, Bloom Skincare</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card featured-t reveal reveal-d2">
+        <div class="testi-result">🔥 3.4× Reach Growth</div>
+        <div class="testi-stars">
+          <span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span>
+        </div>
+        <p class="testi-quote">Working with Kriova was the best investment I made for my brand this year. They don't just give you content ideas — they give you a brand voice, a story, and a strategy that actually works. Our reach went from 5K to 17K in 3 months.</p>
+        <div class="testi-author">
+          <div class="ta-avatar">A</div>
+          <div>
+            <div class="ta-name">Arjun Mehta</div>
+            <div class="ta-role">CEO, FitFlow Studio</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-d3">
+        <div class="testi-result">💎 Brand Identity Elevated</div>
+        <div class="testi-stars">
+          <span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span>
+        </div>
+        <p class="testi-quote">I came to Kriova with a messy brand and no clear direction. They gave us a visual identity and storytelling framework that made us look 10x more premium. Our sales from Instagram went up by 45% in 6 weeks.</p>
+        <div class="testi-author">
+          <div class="ta-avatar">P</div>
+          <div>
+            <div class="ta-name">Priya Nair</div>
+            <div class="ta-role">Owner, Artisan Jewels Co.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="client-logos reveal">
+      <p>Brands We've Worked With</p>
+      <div class="logo-track">
+        <div class="logo-item">Bloom</div>
+        <div class="logo-item">FitFlow</div>
+        <div class="logo-item">Artisan</div>
+        <div class="logo-item">Radiance</div>
+        <div class="logo-item">Elevate</div>
+        <div class="logo-item">Luminary</div>
+        <div class="logo-item">Serene</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
 <section class="pricing" id="pricing">
   <div class="pricing-inner">
     <div class="pricing-header">
-      <span class="section-label">Investment</span>
-      <h2 class="section-title">Service <em>Packages</em></h2>
-      <p class="section-desc">Choose the plan that fits your ambition. Every package is built for real results.</p>
+      <div class="eyebrow reveal">Investment</div>
+      <h2 class="section-title reveal reveal-d1">Choose Your <em>Growth</em> Package</h2>
+      <p style="font-size:15px;color:var(--text-cream-dim);max-width:500px;margin:16px auto 0;line-height:1.8;font-weight:300;" class="reveal reveal-d2">Transparent pricing, real results. Every package comes with dedicated support and a clear growth roadmap.</p>
     </div>
-    <div class="pricing-grid">
-
+    <div class="plans-grid">
+    
       <!-- Starter -->
-      <div class="plan">
+      <div class="plan reveal reveal-d1">
+        <div class="plan-icon">🌱</div>
         <div class="plan-name">Starter</div>
-        <div class="plan-tagline">Perfect for brands just beginning their digital journey</div>
+        <div class="plan-tagline">Perfect for brands just beginning their digital journey and building their online
+          foundation.</div>
         <div class="plan-price">
-          <div class="price-num"><span class="price-currency">₹</span>15,000</div>
-          <span class="price-period">per month</span>
+          <div class="price-amt"><span class="price-curr">₹</span>15,000</div>
+          <div class="price-period">per month · cancel anytime</div>
         </div>
         <ul class="plan-features">
-          <li>Content ideas & concepts</li>
-          <li>Storytelling captions</li>
-          <li>Basic strategy guidance</li>
-          <li>Brand aesthetic direction</li>
+          <li class="plan-feature">
+            <div class="plan-feature-icon">✓</div>Content ideas & creative concepts
+          </li>
+          <li class="plan-feature">
+            <div class="plan-feature-icon">✓</div>Storytelling captions & copy direction
+          </li>
+          <li class="plan-feature">
+            <div class="plan-feature-icon">✓</div>Basic strategy guidance & direction
+          </li>
+          <li class="plan-feature">
+            <div class="plan-feature-icon">✓</div>Brand aesthetic mood board
+          </li>
+          <li class="plan-feature">
+            <div class="plan-feature-icon">✓</div>Monthly strategy document
+          </li>
+          <li class="plan-feature">
+            <div class="plan-feature-icon">✓</div>WhatsApp support
+          </li>
         </ul>
-        <a href="https://wa.me/919313710406?text=Hi%20Krisha!%20I'm%20interested%20in%20the%20Starter%20Package%20-%20₹15,000/month" class="plan-cta" target="_blank"><span>Get Started →</span></a>
+        <a href="https://wa.me/919313710406?text=Hi%20Krisha!%20I'm%20interested%20in%20the%20Starter%20Package%20%E2%82%B915%2C000%2Fmonth"
+          target="_blank" class="plan-cta">
+          <span>Get Started</span> <span>→</span>
+        </a>
       </div>
-
-      <!-- Standard (featured) -->
-      <div class="plan featured">
-        <div class="plan-badge">Most Popular</div>
+    
+      <!-- Standard -->
+      <div class="plan featured-plan reveal reveal-d2">
+        <div class="plan-tag">⭐ Most Popular</div>
+        <div class="plan-icon">🔥</div>
         <div class="plan-name">Standard</div>
-        <div class="plan-tagline">For brands ready to grow with a full creative strategy</div>
+        <div class="plan-tagline">For brands ready to grow with a complete creative system and full strategic support.</div>
         <div class="plan-price">
-          <div class="price-num"><span class="price-currency">₹</span>18,000</div>
-          <span class="price-period">per month</span>
+          <div class="price-amt"><span class="price-curr">₹</span>18,000</div>
+          <div class="price-period">per month · cancel anytime</div>
         </div>
         <ul class="plan-features">
-          <li>Full content ideas & planning</li>
-          <li>Reel hooks & storytelling framework</li>
-          <li>Growth strategy & roadmap</li>
-          <li>Engagement ideas & tactics</li>
-          <li>Monthly performance review</li>
+          <li class="plan-feature">
+            <div class="plan-feature-icon">✓</div>Full content planning system & calendar
+          </li>
+          <li class="plan-feature">
+            <div class="plan-feature-icon">✓</div>Reel hooks & storytelling framework
+          </li>
+          <li class="plan-feature">
+            <div class="plan-feature-icon">✓</div>Complete growth strategy & roadmap
+          </li>
+          <li class="plan-feature">
+            <div class="plan-feature-icon">✓</div>Engagement ideas & community tactics
+          </li>
+          <li class="plan-feature">
+            <div class="plan-feature-icon">✓</div>Monthly performance review & analysis
+          </li>
+          <li class="plan-feature">
+            <div class="plan-feature-icon">✓</div>Brand voice & tone guidelines
+          </li>
+          <li class="plan-feature">
+            <div class="plan-feature-icon">✓</div>Priority WhatsApp support
+          </li>
         </ul>
-        <a href="https://wa.me/919313710406?text=Hi%20Krisha!%20I'm%20interested%20in%20the%20Standard%20Package%20-%20₹18,000/month" class="plan-cta" target="_blank"><span>Get Started →</span></a>
+        <a href="https://wa.me/919313710406?text=Hi%20Krisha!%20I'm%20interested%20in%20the%20Standard%20Package%20%E2%82%B918%2C000%2Fmonth"
+          target="_blank" class="plan-cta">
+          <span>Get Started</span> <span>→</span>
+        </a>
       </div>
-
+    
       <!-- Premium -->
-      <div class="plan">
-        <div class="plan-name">Premium</div>
-        <div class="plan-tagline">Complete brand transformation & maximum growth</div>
-        <div class="plan-price">
-          <div class="price-num"><span class="price-currency">₹</span>25,000</div>
-          <span class="price-period">per month</span>
-        </div>
-        <ul class="plan-features">
-          <li>Complete social media strategy</li>
-          <li>Advanced storytelling & brand voice</li>
-          <li>Brand positioning & identity</li>
-          <li>Full growth roadmap</li>
-          <li>Priority support & revisions</li>
-          <li>Weekly strategy calls</li>
-        </ul>
-        <a href="https://wa.me/919313710406?text=Hi%20Krisha!%20I'm%20interested%20in%20the%20Premium%20Package%20-%20₹25,000/month" class="plan-cta" target="_blank"><span>Get Started →</span></a>
-      </div>
-    </div>
+      <!-- Premium -->
+<div class="plan reveal reveal-d3">
+  <div class="plan-icon">👑</div>
+  <div class="plan-name">Premium</div>
+  <div class="plan-tagline">
+    Complete brand transformation and maximum growth for serious brands ready to dominate.
   </div>
-</section>
 
-<!-- DIVIDER -->
-<div style="background:var(--ink); padding: 0 5%;">
-  <div class="divider" style="max-width:1200px; padding:0;">
-    <div class="divider-line" style="background:rgba(201,169,110,0.15)"></div>
-    <div class="divider-icon" style="border-color:rgba(201,169,110,0.2);color:var(--gold)">✦</div>
-    <div class="divider-line" style="background:rgba(201,169,110,0.15)"></div>
+  <div class="plan-price">
+    <div class="price-amt"><span class="price-curr">₹</span>25,000</div>
+    <div class="price-period">per month · cancel anytime</div>
   </div>
+
+  <ul class="plan-features">
+    <li class="plan-feature">
+      <div class="plan-feature-icon">✓</div>
+      Complete social media overhaul & strategy
+    </li>
+    <li class="plan-feature">
+      <div class="plan-feature-icon">✓</div>
+      Advanced storytelling & brand voice system
+    </li>
+    <li class="plan-feature">
+      <div class="plan-feature-icon">✓</div>
+      Brand positioning & full identity direction
+    </li>
+    <li class="plan-feature">
+      <div class="plan-feature-icon">✓</div>
+      Full 3-month growth roadmap
+    </li>
+    <li class="plan-feature">
+      <div class="plan-feature-icon">✓</div>
+      Priority support & unlimited revisions
+    </li>
+    <li class="plan-feature">
+      <div class="plan-feature-icon">✓</div>
+      Weekly strategy calls (30 min)
+    </li>
+    <li class="plan-feature">
+      <div class="plan-feature-icon">✓</div>
+      Competitor analysis & market research
+    </li>
+    <li class="plan-feature">
+      <div class="plan-feature-icon">✓</div>
+      Dedicated brand strategist
+    </li>
+  </ul>
+
+  <a href="https://wa.me/919313710406?text=Hi%20Krisha!%20I'm%20interested%20in%20the%20Premium%20Package%20%E2%82%B925%2C000%2Fmonth"
+     target="_blank"
+     class="plan-cta">
+    <span>Get Started</span> <span>→</span>
+  </a>
 </div>
-
-<!-- WHY US -->
-<section class="why">
-  <div class="why-grid">
-    <div class="why-left">
-      <span class="section-label">Why Kriova</span>
-      <h2 class="section-title">Built for <em>impact</em></h2>
-      <p class="section-desc">We don't just manage accounts — we build brands that people talk about. Every strategy is rooted in storytelling, aesthetics, and authentic connection.</p>
-      <div class="stats-row" style="margin-top:40px">
-        <div class="stat">
-          <span class="stat-num">50+</span>
-          <span class="stat-label">Brands Served</span>
-        </div>
-        <div class="stat">
-          <span class="stat-num">3×</span>
-          <span class="stat-label">Avg. Growth</span>
-        </div>
-        <div class="stat">
-          <span class="stat-num">100%</span>
-          <span class="stat-label">Organic Focus</span>
-        </div>
-      </div>
     </div>
-    <div class="why-right">
-      <div class="why-item">
-        <div class="why-icon">◈</div>
-        <div class="why-text">
-          <h4>Strategy-First Approach</h4>
-          <p>Every decision is rooted in data, audience insight, and brand positioning — not guesswork.</p>
+    <div class="pricing-note reveal">
+      <span>✓ No hidden fees</span>
+      <span>✓ Cancel anytime</span>
+      <span>✓ Results guaranteed</span>
+      <span>✓ Organic growth only</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RESULTS ═══ -->
+<section class="results">
+  <div class="results-inner">
+    <div class="eyebrow reveal">Why It Works</div>
+    <h2 class="section-title reveal reveal-d1">Numbers That <em>Speak</em> for Themselves</h2>
+    <div class="results-grid">
+      <div class="results-left">
+        <div class="result-item reveal">
+          <div class="ri-num">3×</div>
+          <div class="ri-content">
+            <div class="ri-title">Average Follower Growth Rate</div>
+            <div class="ri-desc">Our clients see an average 3× increase in their follower count within the first 90 days through strategic organic content and positioning.</div>
+          </div>
+        </div>
+        <div class="result-item reveal reveal-d1">
+          <div class="ri-num">8.4%</div>
+          <div class="ri-content">
+            <div class="ri-title">Average Engagement Rate</div>
+            <div class="ri-desc">Industry average is 1-3%. Our story-driven approach consistently delivers 8%+ engagement rates that signal genuine audience connection.</div>
+          </div>
+        </div>
+        <div class="result-item reveal reveal-d2">
+          <div class="ri-num">60</div>
+          <div class="ri-content">
+            <div class="ri-title">Days to First Major Milestone</div>
+            <div class="ri-desc">Most clients hit their first significant growth milestone within 60 days. Strategy + consistency + storytelling = compounding results.</div>
+          </div>
+        </div>
+        <div class="result-item reveal reveal-d3">
+          <div class="ri-num">50+</div>
+          <div class="ri-content">
+            <div class="ri-title">Brands Successfully Transformed</div>
+            <div class="ri-desc">From fashion to fitness, food to finance — we've built winning strategies across industries, niches, and audience sizes.</div>
+          </div>
         </div>
       </div>
-      <div class="why-item">
-        <div class="why-icon">◈</div>
-        <div class="why-text">
-          <h4>Story-Driven Content</h4>
-          <p>Humans connect with stories. We craft narratives that make your brand unforgettable.</p>
+      <div class="results-right reveal from-right">
+        <div class="rr-title">Growth Analytics Overview</div>
+        <div class="rr-sub">Average performance across all active clients</div>
+        <div class="growth-bars">
+          <div class="g-bar-item">
+            <div class="g-bar-info"><span class="g-bar-label">Instagram Reach</span><span class="g-bar-val">+340%</span></div>
+            <div class="g-bar-track"><div class="g-bar-fill" style="width:92%"></div></div>
+          </div>
+          <div class="g-bar-item">
+            <div class="g-bar-info"><span class="g-bar-label">Engagement Rate</span><span class="g-bar-val">8.4% avg</span></div>
+            <div class="g-bar-track"><div class="g-bar-fill" style="width:84%"></div></div>
+          </div>
+          <div class="g-bar-item">
+            <div class="g-bar-info"><span class="g-bar-label">Follower Growth</span><span class="g-bar-val">+280%</span></div>
+            <div class="g-bar-track"><div class="g-bar-fill" style="width:75%"></div></div>
+          </div>
+          <div class="g-bar-item">
+            <div class="g-bar-info"><span class="g-bar-label">Profile Visits</span><span class="g-bar-val">+190%</span></div>
+            <div class="g-bar-track"><div class="g-bar-fill" style="width:66%"></div></div>
+          </div>
         </div>
-      </div>
-      <div class="why-item">
-        <div class="why-icon">◈</div>
-        <div class="why-text">
-          <h4>Aesthetic Excellence</h4>
-          <p>Visual identity that stops the scroll — cohesive, beautiful, and unmistakably yours.</p>
-        </div>
-      </div>
-      <div class="why-item">
-        <div class="why-icon">◈</div>
-        <div class="why-text">
-          <h4>Dedicated Partner</h4>
-          <p>A creative partner who understands your goals and works alongside you every step.</p>
+        <div class="rr-divider"></div>
+        <div class="rr-bottom">
+          <div class="rr-mini-stat">
+            <div class="rr-mini-num">100%</div>
+            <div class="rr-mini-label">Organic Strategy — Zero paid ads</div>
+          </div>
+          <div class="rr-mini-stat">
+            <div class="rr-mini-num">24h</div>
+            <div class="rr-mini-label">Average response time to clients</div>
+          </div>
+          <div class="rr-mini-stat">
+            <div class="rr-mini-num">5★</div>
+            <div class="rr-mini-label">Average client satisfaction rating</div>
+          </div>
+          <div class="rr-mini-stat">
+            <div class="rr-mini-num">90%</div>
+            <div class="rr-mini-label">Client retention after first month</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- ═══ FAQ ═══ -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div class="eyebrow reveal">Questions & Answers</div>
+    <h2 class="section-title reveal reveal-d1">Everything You Need to <em>Know</em></h2>
+    <div class="faq-grid">
+      <div class="faq-left">
+        <p style="font-size:15px;color:var(--text-mid);line-height:1.8;font-weight:300;margin-bottom:24px;" class="reveal">Can't find what you're looking for? We're just a message away. Chat with us on WhatsApp and we'll answer any questions you have.</p>
+        <div class="faq-cta-box reveal">
+          <h3>Still have questions?</h3>
+          <p>We're happy to jump on a quick call or chat to understand your goals and tell you exactly how we can help.</p>
+          <a href="https://wa.me/919313710406?text=Hi%20Krisha!%20I%20have%20a%20question%20about%20Kriova%20Studio." target="_blank" class="btn-gold">Chat with Krisha →</a>
+        </div>
+      </div>
+      <div class="faq-right">
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">What exactly is included in each package?</span>
+            <div class="faq-toggle">+</div>
+          </div>
+          <div class="faq-a"><p>Each package includes a fully customized strategy document, content ideas, storytelling frameworks, and growth tactics. The Standard and Premium packages also include content calendars, reel hooks, performance reviews, and direct strategy support. We tailor everything to your specific brand, niche, and goals.</p></div>
+        </div>
+        <div class="faq-item reveal reveal-d1">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">Do you manage my Instagram account for me?</span>
+            <div class="faq-toggle">+</div>
+          </div>
+          <div class="faq-a"><p>We are a strategy and creative consultancy — we provide you with everything you need (strategy, content ideas, hooks, captions, calendars) and you execute it. This means you stay in control of your brand while benefiting from expert-level strategic direction. If you need full management, we can discuss a custom arrangement.</p></div>
+        </div>
+        <div class="faq-item reveal reveal-d2">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">How soon can I expect to see results?</span>
+            <div class="faq-toggle">+</div>
+          </div>
+          <div class="faq-a"><p>Most clients start seeing measurable improvement in engagement within the first 2-4 weeks of implementing the strategy. Significant follower growth and reach expansion typically happen within 60-90 days. Consistent implementation is key — organic growth compounds over time.</p></div>
+        </div>
+        <div class="faq-item reveal reveal-d3">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">Is there a minimum commitment period?</span>
+            <div class="faq-toggle">+</div>
+          </div>
+          <div class="faq-a"><p>No long-term contracts required. You can cancel any time with 7 days notice. However, we recommend a minimum of 3 months to see the full impact of the strategy — social media growth is a long game and the results compound the longer you stay consistent.</p></div>
+        </div>
+        <div class="faq-item reveal reveal-d4">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">Do you work with all types of businesses?</span>
+            <div class="faq-toggle">+</div>
+          </div>
+          <div class="faq-a"><p>Yes! We've worked with fashion brands, skincare, fitness, food, lifestyle, coaches, consultants, e-commerce, and more. As long as you have a product or service and a desire to grow your online presence, we can build a strategy that works for your specific niche and audience.</p></div>
+        </div>
+        <div class="faq-item reveal reveal-d5">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">How do we get started?</span>
+            <div class="faq-toggle">+</div>
+          </div>
+          <div class="faq-a"><p>Simply reach out via WhatsApp or email, and we'll have a quick discovery chat to understand your brand, goals, and current situation. We'll then recommend the best package for you and get started within 2-3 business days of onboarding.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
 <section class="contact" id="contact">
   <div class="contact-inner">
-    <div class="contact-left">
-      <span class="section-label">Let's Connect</span>
-      <h2 class="section-title">Start your <em>journey</em></h2>
-      <p class="section-desc">Ready to build a brand that stands out? Reach out and let's create something remarkable together.</p>
-      <div class="contact-links">
-        <a href="tel:+919313710406" class="contact-item">
-          <div class="contact-icon">📞</div>
-          <div class="contact-text">
-            <small>Call us</small>
-            <strong>+91 93137 10406</strong>
+    <div class="eyebrow reveal">Get In Touch</div>
+    <h2 class="section-title reveal reveal-d1">Ready to Build Something <em>Remarkable?</em></h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p class="contact-info-text reveal">We'd love to hear about your brand, your goals, and your vision. Reach out and let's start a conversation about how we can help you grow.</p>
+        <div class="contact-methods">
+          <a href="tel:+919313710406" class="contact-method reveal reveal-d1">
+            <div class="cm-icon">📞</div>
+            <div class="cm-text">
+              <div class="cm-label">Call Us</div>
+              <div class="cm-value">+91 93137 10406</div>
+            </div>
+            <div class="cm-arrow">→</div>
+          </a>
+          <a href="mailto:acharyakrisha853@gmail.com" class="contact-method reveal reveal-d2">
+            <div class="cm-icon">✉️</div>
+            <div class="cm-text">
+              <div class="cm-label">Email Us</div>
+              <div class="cm-value">acharyakrisha853@gmail.com</div>
+            </div>
+            <div class="cm-arrow">→</div>
+          </a>
+          <a href="https://wa.me/919313710406" target="_blank" class="contact-method reveal reveal-d3">
+            <div class="cm-icon">💬</div>
+            <div class="cm-text">
+              <div class="cm-label">WhatsApp</div>
+              <div class="cm-value">Chat with Krisha Acharya</div>
+            </div>
+            <div class="cm-arrow">→</div>
+          </a>
+        </div>
+      </div>
+      <div class="contact-form reveal from-right">
+        <div class="cf-title">Send a Message</div>
+        <div class="cf-sub">We'll get back to you within 24 hours.</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="Your full name" id="fname">
           </div>
-          <span class="contact-arrow">→</span>
-        </a>
-        <a href="mailto:acharyakrisha853@gmail.com" class="contact-item">
-          <div class="contact-icon">✉</div>
-          <div class="contact-text">
-            <small>Email us</small>
-            <strong>acharyakrisha853@gmail.com</strong>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" placeholder="+91 98765 43210" id="fphone">
           </div>
-          <span class="contact-arrow">→</span>
-        </a>
-        <a href="https://wa.me/919313710406" target="_blank" class="contact-item">
-          <div class="contact-icon">💬</div>
-          <div class="contact-text">
-            <small>WhatsApp</small>
-            <strong>Chat with Krisha Acharya</strong>
-          </div>
-          <span class="contact-arrow">→</span>
-        </a>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@yourbrand.com" id="femail">
+        </div>
+        <div class="form-group">
+          <label>Package Interest</label>
+          <select id="fpackage">
+            <option value="">Select a package...</option>
+            <option value="Starter">🌱 Starter — ₹15,000/month</option>
+            <option value="Standard">🔥 Standard — ₹18,000/month</option>
+            <option value="Premium">👑 Premium — ₹25,000/month</option>
+            <option value="Custom">💬 Let's discuss something custom</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tell Us About Your Brand</label>
+          <textarea placeholder="What does your brand do? What are your goals? Any challenges?" id="fmsg"></textarea>
+        </div>
+        <button class="form-submit" onclick="handleSubmit()">
+          Send Message ✦
+        </button>
       </div>
-    </div>
-    <div class="contact-right">
-      <h3>Send a message</h3>
-      <p>We'll get back to you within 24 hours.</p>
-      <div class="form-group">
-        <label>Your Name</label>
-        <input type="text" placeholder="Krisha Acharya" id="fname">
-      </div>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" placeholder="you@yourbrand.com" id="femail">
-      </div>
-      <div class="form-group">
-        <label>Package Interest</label>
-        <select id="fpackage">
-          <option value="">Select a package...</option>
-          <option value="Starter">Starter — ₹15,000/month</option>
-          <option value="Standard">Standard — ₹18,000/month</option>
-          <option value="Premium">Premium — ₹25,000/month</option>
-          <option value="Custom">Let's discuss something custom</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Message</label>
-        <textarea placeholder="Tell us about your brand..." id="fmsg"></textarea>
-      </div>
-      <button class="form-submit" onclick="handleSubmit()">Send Message ✦</button>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ═══ FOOTER ═══ -->
 <footer>
-  <div class="footer-logo">
-    <img src="https://elitecodetechnologies.com/wp-content/uploads/2026/05/ChatGPT-Image-May-1-2026-12_34_25-PM.png" alt="Kriova Studio" onerror="this.style.display='none';this.nextSibling.style.display='block'">
-    <span style="display:none;font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(250,247,242,0.6)">Kriova Studio</span>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="https://elitecodetechnologies.com/wp-content/uploads/2026/05/Kriova-1.png" alt="Kriova Studio" onerror="this.style.display='none';document.querySelector('.footer-logo-text').style.display='block'">
+        <span class="footer-logo-text">Kriova</span>
+      </div>
+      <p class="footer-tagline">Where brands find their voice. We build brands that people talk about — through strategy, storytelling, and stunning aesthetics.</p>
+      <div class="footer-socials">
+        <a href="#" class="footer-social">📷</a>
+        <a href="https://wa.me/919313710406" target="_blank" class="footer-social">💬</a>
+        <a href="mailto:acharyakrisha853@gmail.com" class="footer-social">✉</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Services</div>
+      <ul>
+        <li><a href="#services">Social Media Strategy</a></li>
+        <li><a href="#services">Content Planning</a></li>
+        <li><a href="#services">Brand Storytelling</a></li>
+        <li><a href="#services">Instagram Growth</a></li>
+        <li><a href="#services">Brand Aesthetics</a></li>
+        <li><a href="#services">Viral Content</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#process">Our Process</a></li>
+        <li><a href="#testimonials">Client Results</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Contact</div>
+      <ul>
+        <li><a href="tel:+919313710406">+91 93137 10406</a></li>
+        <li><a href="mailto:acharyakrisha853@gmail.com">acharyakrisha853@gmail.com</a></li>
+        <li><a href="https://wa.me/919313710406" target="_blank">WhatsApp Chat</a></li>
+      </ul>
+    </div>
   </div>
-  <p class="footer-copy">© 2026 Kriova Studio · All rights reserved</p>
-  <div class="footer-links">
-    <a href="tel:+919313710406">+91 93137 10406</a>
-    <a href="mailto:acharyakrisha853@gmail.com">Email</a>
-    <a href="https://wa.me/919313710406" target="_blank">WhatsApp</a>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Kriova Studio · All rights reserved · Crafted with ♥</p>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
   </div>
 </footer>
 
-<!-- Float WhatsApp -->
-<a href="https://wa.me/919313710406?text=Hi%20Krisha!%20I'm%20interested%20in%20Kriova%20Studio%20services." target="_blank" class="float-badge" title="Chat on WhatsApp">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-  </svg>
-</a>
+<!-- WhatsApp Float -->
+<div class="wa-float">
+  <div class="wa-tooltip">Chat with Krisha! 👋</div>
+  <a href="https://wa.me/919313710406?text=Hi%20Krisha!%20I%27m%20interested%20in%20Kriova%20Studio%20services." target="_blank" class="wa-btn">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+</div>
 
 <script>
-  // ─── CURSOR ───
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
+/* ─── LOADER ─── */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('done');
+  }, 2200);
+});
 
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top = my + 'px';
+/* ─── CURSOR ─── */
+const dot = document.getElementById('cursorDot');
+const circle = document.getElementById('cursorCircle');
+let mx = 0, my = 0, cx = 0, cy = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+});
+
+(function animateCursor() {
+  cx += (mx - cx) * 0.1;
+  cy += (my - cy) * 0.1;
+  circle.style.left = cx + 'px'; circle.style.top = cy + 'px';
+  requestAnimationFrame(animateCursor);
+})();
+
+document.querySelectorAll('a, button, .faq-q, .service-card, .plan, .contact-method').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
+
+/* ─── NAV SCROLL ─── */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+/* ─── HAMBURGER ─── */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+function closeMobile() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+}
+
+/* ─── SMOOTH SCROLL ─── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); closeMobile(); }
   });
+});
 
-  function animRing() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-    requestAnimationFrame(animRing);
-  }
-  animRing();
-
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.transform = 'translate(-50%,-50%) scale(2)';
-      ring.style.transform = 'translate(-50%,-50%) scale(1.5)';
-      ring.style.opacity = '0.25';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
-      ring.style.transform = 'translate(-50%,-50%) scale(1)';
-      ring.style.opacity = '0.5';
-    });
-  });
-
-  // ─── INTERSECTION OBSERVER ───
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const delay = el.dataset.delay || 0;
-        setTimeout(() => el.classList.add('visible'), delay * 100);
-        observer.unobserve(el);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  document.querySelectorAll('.service-card').forEach((el, i) => {
-    el.dataset.delay = i;
-    observer.observe(el);
-  });
-  document.querySelectorAll('.plan').forEach((el, i) => {
-    el.dataset.delay = i * 1.5;
-    observer.observe(el);
-  });
-  document.querySelectorAll('.stat, .why-item, .contact-item').forEach((el, i) => {
-    el.dataset.delay = i * 1.5;
-    observer.observe(el);
-  });
-
-  // ─── COUNTER ANIMATION ───
-  function animateCount(el, target, suffix = '') {
-    let start = 0;
-    const duration = 1800;
-    const step = timestamp => {
-      if (!start) start = timestamp;
-      const progress = Math.min((timestamp - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      const val = Math.round(ease * target);
-      el.textContent = val + suffix;
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }
-
-  const statsObs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateCount(document.querySelectorAll('.stat-num')[0], 50, '+');
-        animateCount(document.querySelectorAll('.stat-num')[1], 3, '×');
-        document.querySelectorAll('.stat-num')[2].textContent = '100%';
-        statsObs.disconnect();
-      }
-    });
-  }, { threshold: 0.5 });
-  if (document.querySelector('.stats-row')) statsObs.observe(document.querySelector('.stats-row'));
-
-  // ─── FORM SUBMIT ───
-  function handleSubmit() {
-    const name = document.getElementById('fname').value.trim();
-    const email = document.getElementById('femail').value.trim();
-    const pkg = document.getElementById('fpackage').value;
-    const msg = document.getElementById('fmsg').value.trim();
-
-    if (!name || !email) {
-      showToast('Please fill in your name and email ✦');
-      return;
+/* ─── REVEAL ON SCROLL ─── */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObs.unobserve(entry.target);
     }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-    const waMsg = `Hi Krisha! My name is ${name} (${email}). I'm interested in the ${pkg || 'your services'}. ${msg ? 'Message: ' + msg : ''}`;
-    window.open(`https://wa.me/919313710406?text=${encodeURIComponent(waMsg)}`, '_blank');
-    
-    document.getElementById('fname').value = '';
-    document.getElementById('femail').value = '';
-    document.getElementById('fpackage').value = '';
-    document.getElementById('fmsg').value = '';
+/* ─── FAQ ─── */
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
 
-    showToast('Redirecting to WhatsApp... ✦');
+/* ─── FORM SUBMIT ─── */
+function handleSubmit() {
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  const pkg = document.getElementById('fpackage').value;
+  const msg = document.getElementById('fmsg').value.trim();
+  const phone = document.getElementById('fphone').value.trim();
+
+  if (!name || !email) {
+    showToast('⚠️ Please fill in your name and email');
+    return;
   }
 
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
-  }
+  const waMsg = `Hi Krisha! 👋\n\nMy name is ${name}.\nEmail: ${email}${phone ? '\nPhone: ' + phone : ''}\nPackage: ${pkg || 'Not selected'}\n\n${msg ? 'Message: ' + msg : 'I\'d love to discuss how Kriova can help my brand grow!'}`;
+  window.open(`https://wa.me/919313710406?text=${encodeURIComponent(waMsg)}`, '_blank');
 
-  // ─── PARALLAX CIRCLES ───
-  document.addEventListener('mousemove', e => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 20;
-    const y = (e.clientY / window.innerHeight - 0.5) * 20;
-    document.querySelector('.circle-1').style.transform = `translate(${x * 0.8}px, ${y * 0.8}px)`;
-    document.querySelector('.circle-2').style.transform = `translate(${-x * 0.5}px, ${-y * 0.5}px)`;
-    document.querySelector('.circle-3').style.transform = `translate(${x * 1.2}px, ${y * 1.2}px)`;
-  });
+  document.getElementById('fname').value = '';
+  document.getElementById('femail').value = '';
+  document.getElementById('fphone').value = '';
+  document.getElementById('fpackage').value = '';
+  document.getElementById('fmsg').value = '';
 
-  // ─── SMOOTH SCROLL ───
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
+  showToast('✦ Redirecting to WhatsApp...');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+/* ─── COUNTER ANIMATION ─── */
+function animateNumber(el, target, suffix = '', decimals = 0) {
+  let start = 0;
+  const dur = 2000;
+  const startTime = performance.now();
+  const step = now => {
+    const progress = Math.min((now - startTime) / dur, 1);
+    const ease = 1 - Math.pow(1 - progress, 4);
+    const val = ease * target;
+    el.textContent = (decimals ? val.toFixed(decimals) : Math.round(val)) + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+const statsObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const nums = document.querySelectorAll('.a-stat-num');
+    animateNumber(nums[0], 50, '+');
+    animateNumber(nums[1], 3, '×');
+    animateNumber(nums[2], 100, '%');
+    animateNumber(nums[3], 2, 'yrs');
+    statsObs.disconnect();
   });
+}, { threshold: 0.5 });
+const statsRow = document.querySelector('.about-stats-row');
+if (statsRow) statsObs.observe(statsRow);
+
+/* ─── PARALLAX HERO FLOATS ─── */
+document.addEventListener('mousemove', e => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 15;
+  const y = (e.clientY / window.innerHeight - 0.5) * 15;
+  const f1 = document.querySelector('.hero-float-1');
+  const f2 = document.querySelector('.hero-float-2');
+  if (f1) f1.style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
+  if (f2) f2.style.transform = `translate(${-x * 0.3}px, ${-y * 0.3}px)`;
+});
 </script>
 </body>
 </html>
