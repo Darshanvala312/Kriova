@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kriova Studio – Pricing</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --warm-white: #FFFEF9;
+    --ink: #1A1410;
+    --ink-light: #3D3530;
+    --gold: #C9A96E;
+    --gold-light: #E8D5B0;
+    --gold-dark: #9E7B3F;
+    --rose: #D4A09A;
+    --sage: #8BA888;
+    --border: rgba(201,169,110,0.25);
+    --shadow: 0 8px 40px rgba(26,20,16,0.08);
+    --shadow-lg: 0 24px 80px rgba(26,20,16,0.14);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ─── NOISE TEXTURE ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ─── CUSTOM CURSOR ─── */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity: 0.5;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    backdrop-filter: blur(20px);
+    background: rgba(250,247,242,0.85);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo img {
+    height: 48px;
+    width: auto;
+  }
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-light);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--gold-dark); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-cta {
+    padding: 10px 24px;
+    background: var(--ink);
+    color: var(--cream) !important;
+    border-radius: 2px;
+    font-size: 13px !important;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--gold-dark) !important; color: white !important; transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 140px 5% 80px;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg-circles {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.07;
+    animation: floatCircle 12s ease-in-out infinite;
+  }
+  .circle-1 { width: 500px; height: 500px; background: var(--gold); top: -100px; right: -100px; animation-delay: 0s; }
+  .circle-2 { width: 300px; height: 300px; background: var(--rose); bottom: 0; left: -80px; animation-delay: 4s; }
+  .circle-3 { width: 200px; height: 200px; background: var(--sage); top: 50%; left: 30%; animation-delay: 8s; }
+
+  @keyframes floatCircle {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(20px, -30px) scale(1.05); }
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-logo {
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.1s forwards;
+  }
+  .hero-logo img {
+    height: 80px;
+    width: auto;
+    filter: drop-shadow(0 4px 20px rgba(201,169,110,0.3));
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 8vw, 100px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.3s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-dark);
+  }
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-light);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.45s forwards;
+  }
+  .hero-desc {
+    max-width: 560px;
+    font-size: 15px;
+    color: var(--ink-light);
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.6s forwards;
+    margin-bottom: 40px;
+  }
+  .hero-scroll {
+    opacity: 0;
+    animation: fadeUp 0.9s 0.9s forwards;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--gold-dark);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.6); opacity: 0.4; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTION COMMON ─── */
+  section { position: relative; z-index: 1; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .section-title em { font-style: italic; color: var(--gold-dark); }
+  .section-desc {
+    font-size: 15px;
+    color: var(--ink-light);
+    line-height: 1.8;
+    max-width: 540px;
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    display: flex; align-items: center; gap: 16px;
+    padding: 0 5%; margin: 0 auto;
+    max-width: 1200px;
+  }
+  .divider-line {
+    flex: 1; height: 1px; background: var(--border);
+  }
+  .divider-icon {
+    width: 32px; height: 32px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold);
+    font-size: 14px;
+  }
+
+  /* ─── SERVICES ─── */
+  .services {
+    padding: 100px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .services-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 60px;
+    flex-wrap: wrap; gap: 24px;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .service-card {
+    background: var(--warm-white);
+    padding: 36px 32px;
+    transition: background 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
+  }
+  .service-card.visible { opacity: 1; transform: translateY(0); }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--rose));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { background: #FFFCF5; }
+
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--gold-light);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .service-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+  .service-desc {
+    font-size: 13.5px;
+    color: var(--ink-light);
+    line-height: 1.75;
+  }
+
+  /* ─── PRICING ─── */
+  .pricing {
+    padding: 100px 5%;
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+  .pricing::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .pricing-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .pricing-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  .pricing-header .section-label { color: var(--gold); }
+  .pricing-header .section-title { color: var(--cream); }
+  .pricing-header .section-title em { color: var(--gold); }
+  .pricing-header .section-desc { color: rgba(250,247,242,0.6); margin: 0 auto; text-align: center; }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: rgba(201,169,110,0.15);
+  }
+
+  .plan {
+    background: #211C17;
+    padding: 48px 36px 44px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, background 0.3s;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .plan.visible { opacity: 1; transform: translateY(0); }
+  .plan.featured {
+    background: #2A2018;
+    transform: translateY(0);
+  }
+  .plan.featured.visible { transform: translateY(-8px); }
+  .plan:hover { background: #2E2620; }
+
+  .plan-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+  .plan-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .plan-tagline {
+    font-size: 12.5px;
+    color: rgba(250,247,242,0.45);
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+  .plan-price {
+    margin-bottom: 36px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(201,169,110,0.15);
+  }
+  .price-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .price-currency {
+    font-size: 24px;
+    vertical-align: top;
+    margin-top: 8px;
+    display: inline-block;
+    color: var(--gold-light);
+  }
+  .price-period {
+    font-size: 12px;
+    color: rgba(250,247,242,0.4);
+    letter-spacing: 0.08em;
+    margin-top: 6px;
+    display: block;
+  }
+  .plan-features {
+    list-style: none;
+    margin-bottom: 40px;
+  }
+  .plan-features li {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(201,169,110,0.08);
+    font-size: 13.5px;
+    color: rgba(250,247,242,0.7);
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .plan-features li::before {
+    content: '✦';
+    color: var(--gold);
+    font-size: 9px;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+  .plan-cta {
+    display: block;
+    text-align: center;
+    padding: 14px 24px;
+    border: 1px solid rgba(201,169,110,0.3);
+    color: var(--gold-light);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .plan-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  .plan-cta span { position: relative; z-index: 1; }
+  .plan-cta:hover::before { transform: translateX(0); }
+  .plan-cta:hover { color: var(--ink); border-color: var(--gold); }
+
+  .plan.featured .plan-cta {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+  }
+  .plan.featured .plan-cta::before { background: var(--gold-dark); }
+  .plan.featured .plan-cta:hover { color: var(--cream); }
+
+  /* ─── WHY US ─── */
+  .why {
+    padding: 100px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .why-left .section-desc { margin-bottom: 36px; }
+  .stats-row {
+    display: flex; gap: 40px; flex-wrap: wrap;
+  }
+  .stat {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .stat.visible { opacity: 1; transform: translateY(0); }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--gold-dark);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--ink-light);
+    letter-spacing: 0.05em;
+  }
+  .why-right {
+    display: grid;
+    gap: 2px;
+    background: var(--border);
+  }
+  .why-item {
+    background: var(--warm-white);
+    padding: 28px 28px;
+    display: flex; gap: 20px; align-items: flex-start;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .why-item.visible { opacity: 1; transform: translateX(0); }
+  .why-icon {
+    width: 40px; height: 40px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    color: var(--gold-dark);
+  }
+  .why-text h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .why-text p {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.65;
+  }
+
+  /* ─── CONTACT ─── */
+  .contact {
+    padding: 100px 5%;
+    background: linear-gradient(135deg, #F5EFE4 0%, #EDE4D4 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .contact::before {
+    content: '"';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 400px;
+    color: rgba(201,169,110,0.06);
+    top: -80px; right: 5%;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .contact-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .contact-left .section-desc { margin-bottom: 48px; }
+  .contact-links {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .contact-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: gap 0.3s ease;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease, gap 0.3s ease;
+  }
+  .contact-item.visible { opacity: 1; transform: translateX(0); }
+  .contact-item:hover { gap: 24px; }
+  .contact-icon {
+    width: 44px; height: 44px;
+    background: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold);
+    font-size: 16px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    transition: background 0.3s;
+  }
+  .contact-item:hover .contact-icon { background: var(--gold-dark); color: white; }
+  .contact-text {
+    flex: 1;
+  }
+  .contact-text small {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 2px;
+  }
+  .contact-text strong {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .contact-arrow { color: var(--gold-dark); font-size: 18px; }
+
+  .contact-right {
+    background: var(--ink);
+    padding: 48px 44px;
+    position: relative;
+  }
+  .contact-right h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .contact-right p {
+    font-size: 13px;
+    color: rgba(250,247,242,0.5);
+    margin-bottom: 36px;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,169,110,0.2);
+    color: var(--cream);
+    padding: 12px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    outline: none;
+    transition: border-color 0.3s;
+    border-radius: 0;
+    appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold);
+    background: rgba(201,169,110,0.06);
+  }
+  .form-group select option { background: #211C17; color: var(--cream); }
+  .form-group textarea { resize: none; height: 80px; }
+  .form-submit {
+    width: 100%;
+    padding: 14px;
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .form-submit:hover { background: var(--gold-dark); color: white; transform: translateY(-2px); }
+  .form-submit:active { transform: translateY(0); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #0E0C09;
+    padding: 40px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-logo img { height: 36px; width: auto; opacity: 0.8; }
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(250,247,242,0.3);
+    letter-spacing: 0.05em;
+  }
+  .footer-links {
+    display: flex; gap: 24px;
+  }
+  .footer-links a {
+    font-size: 12px;
+    color: rgba(250,247,242,0.35);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ─── FLOATING BADGE ─── */
+  .float-badge {
+    position: fixed;
+    bottom: 32px; right: 32px;
+    z-index: 200;
+    width: 56px; height: 56px;
+    background: var(--ink);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.3s, background 0.3s;
+    text-decoration: none;
+  }
+  .float-badge:hover { transform: scale(1.1) rotate(-10deg); background: var(--gold-dark); }
+  .float-badge svg { width: 22px; height: 22px; fill: var(--gold); }
+  .float-badge:hover svg { fill: white; }
+
+  /* ─── TOAST ─── */
+  .toast {
+    position: fixed;
+    bottom: 100px; right: 32px;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 12px 20px;
+    font-size: 13px;
+    border-left: 3px solid var(--gold);
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; gap: 48px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+    .plan.featured.visible { transform: none; }
+    .cursor, .cursor-ring { display: none; }
+  }
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .hero-logo img { height: 56px; }
+    .float-badge { bottom: 20px; right: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast">Message sent! We'll reply soon ✦</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="https://elitecodetechnologies.com/wp-content/uploads/2026/05/ChatGPT-Image-May-1-2026-12_34_25-PM.png" alt="Kriova Studio" onerror="this.style.display='none';this.nextSibling.style.display='block'">
+    <span style="display:none;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--ink)">Kriova Studio</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="mailto:acharyakrisha853@gmail.com" class="nav-cta">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-circles">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+  </div>
+  <div class="hero-logo">
+    <img src="https://elitecodetechnologies.com/wp-content/uploads/2026/05/ChatGPT-Image-May-1-2026-12_34_25-PM.png" alt="Kriova Studio" onerror="this.style.display='none'">
+  </div>
+  <p class="hero-eyebrow">Social Media & Creative Services</p>
+  <h1 class="hero-title">Kriova<br><em>Studio</em></h1>
+  <p class="hero-subtitle">Where brands find their voice</p>
+  <p class="hero-desc">We help brands grow through creative storytelling, social media strategy, and strong brand aesthetics — building an online identity that attracts attention, builds trust, and grows audiences organically.</p>
+  <div class="hero-scroll">
+    <span>Discover</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-icon">✦</div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header">
+    <div>
+      <span class="section-label">What we do</span>
+      <h2 class="section-title">Our <em>Services</em></h2>
+    </div>
+    <p class="section-desc">Every service is crafted to build a brand that doesn't just exist online — it commands attention.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3 class="service-name">Social Media Strategy</h3>
+      <p class="service-desc">Audience research, content direction, brand positioning, and monthly strategy planning tailored to your goals.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3 class="service-name">Content Planning</h3>
+      <p class="service-desc">Weekly and monthly content calendars with reel ideas, storytelling hooks, and post concepts that convert.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3 class="service-name">Brand Storytelling</h3>
+      <p class="service-desc">Narrative-driven content that helps brands emotionally connect with their audience and build lasting loyalty.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <h3 class="service-name">Instagram Growth Strategy</h3>
+      <p class="service-desc">Profile optimization, hashtag research, posting strategy, and engagement improvement for organic growth.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <h3 class="service-name">Brand Aesthetics</h3>
+      <p class="service-desc">Visual direction for posts, reels, and page layout to build a recognizable and magnetic identity.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <h3 class="service-name">Creative Content Ideas</h3>
+      <p class="service-desc">High-performing reel concepts, carousel ideas, hooks, and content experiments designed to go viral.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-icon">◆</div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-inner">
+    <div class="pricing-header">
+      <span class="section-label">Investment</span>
+      <h2 class="section-title">Service <em>Packages</em></h2>
+      <p class="section-desc">Choose the plan that fits your ambition. Every package is built for real results.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <!-- Starter -->
+      <div class="plan">
+        <div class="plan-name">Starter</div>
+        <div class="plan-tagline">Perfect for brands just beginning their digital journey</div>
+        <div class="plan-price">
+          <div class="price-num"><span class="price-currency">₹</span>8,000</div>
+          <span class="price-period">per month</span>
+        </div>
+        <ul class="plan-features">
+          <li>Content ideas & concepts</li>
+          <li>Storytelling captions</li>
+          <li>Basic strategy guidance</li>
+          <li>Brand aesthetic direction</li>
+        </ul>
+        <a href="https://wa.me/919313710406?text=Hi%20Krisha!%20I'm%20interested%20in%20the%20Starter%20Package%20-%20₹8,000/month" class="plan-cta" target="_blank"><span>Get Started →</span></a>
+      </div>
+
+      <!-- Standard (featured) -->
+      <div class="plan featured">
+        <div class="plan-badge">Most Popular</div>
+        <div class="plan-name">Standard</div>
+        <div class="plan-tagline">For brands ready to grow with a full creative strategy</div>
+        <div class="plan-price">
+          <div class="price-num"><span class="price-currency">₹</span>12,000</div>
+          <span class="price-period">per month</span>
+        </div>
+        <ul class="plan-features">
+          <li>Full content ideas & planning</li>
+          <li>Reel hooks & storytelling framework</li>
+          <li>Growth strategy & roadmap</li>
+          <li>Engagement ideas & tactics</li>
+          <li>Monthly performance review</li>
+        </ul>
+        <a href="https://wa.me/919313710406?text=Hi%20Krisha!%20I'm%20interested%20in%20the%20Standard%20Package%20-%20₹12,000/month" class="plan-cta" target="_blank"><span>Get Started →</span></a>
+      </div>
+
+      <!-- Premium -->
+      <div class="plan">
+        <div class="plan-name">Premium</div>
+        <div class="plan-tagline">Complete brand transformation & maximum growth</div>
+        <div class="plan-price">
+          <div class="price-num"><span class="price-currency">₹</span>20,000</div>
+          <span class="price-period">per month</span>
+        </div>
+        <ul class="plan-features">
+          <li>Complete social media strategy</li>
+          <li>Advanced storytelling & brand voice</li>
+          <li>Brand positioning & identity</li>
+          <li>Full growth roadmap</li>
+          <li>Priority support & revisions</li>
+          <li>Weekly strategy calls</li>
+        </ul>
+        <a href="https://wa.me/919313710406?text=Hi%20Krisha!%20I'm%20interested%20in%20the%20Premium%20Package%20-%20₹20,000/month" class="plan-cta" target="_blank"><span>Get Started →</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div style="background:var(--ink); padding: 0 5%;">
+  <div class="divider" style="max-width:1200px; padding:0;">
+    <div class="divider-line" style="background:rgba(201,169,110,0.15)"></div>
+    <div class="divider-icon" style="border-color:rgba(201,169,110,0.2);color:var(--gold)">✦</div>
+    <div class="divider-line" style="background:rgba(201,169,110,0.15)"></div>
+  </div>
+</div>
+
+<!-- WHY US -->
+<section class="why">
+  <div class="why-grid">
+    <div class="why-left">
+      <span class="section-label">Why Kriova</span>
+      <h2 class="section-title">Built for <em>impact</em></h2>
+      <p class="section-desc">We don't just manage accounts — we build brands that people talk about. Every strategy is rooted in storytelling, aesthetics, and authentic connection.</p>
+      <div class="stats-row" style="margin-top:40px">
+        <div class="stat">
+          <span class="stat-num">50+</span>
+          <span class="stat-label">Brands Served</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">3×</span>
+          <span class="stat-label">Avg. Growth</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Organic Focus</span>
+        </div>
+      </div>
+    </div>
+    <div class="why-right">
+      <div class="why-item">
+        <div class="why-icon">◈</div>
+        <div class="why-text">
+          <h4>Strategy-First Approach</h4>
+          <p>Every decision is rooted in data, audience insight, and brand positioning — not guesswork.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">◈</div>
+        <div class="why-text">
+          <h4>Story-Driven Content</h4>
+          <p>Humans connect with stories. We craft narratives that make your brand unforgettable.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">◈</div>
+        <div class="why-text">
+          <h4>Aesthetic Excellence</h4>
+          <p>Visual identity that stops the scroll — cohesive, beautiful, and unmistakably yours.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">◈</div>
+        <div class="why-text">
+          <h4>Dedicated Partner</h4>
+          <p>A creative partner who understands your goals and works alongside you every step.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <span class="section-label">Let's Connect</span>
+      <h2 class="section-title">Start your <em>journey</em></h2>
+      <p class="section-desc">Ready to build a brand that stands out? Reach out and let's create something remarkable together.</p>
+      <div class="contact-links">
+        <a href="tel:+919313710406" class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div class="contact-text">
+            <small>Call us</small>
+            <strong>+91 93137 10406</strong>
+          </div>
+          <span class="contact-arrow">→</span>
+        </a>
+        <a href="mailto:acharyakrisha853@gmail.com" class="contact-item">
+          <div class="contact-icon">✉</div>
+          <div class="contact-text">
+            <small>Email us</small>
+            <strong>acharyakrisha853@gmail.com</strong>
+          </div>
+          <span class="contact-arrow">→</span>
+        </a>
+        <a href="https://wa.me/919313710406" target="_blank" class="contact-item">
+          <div class="contact-icon">💬</div>
+          <div class="contact-text">
+            <small>WhatsApp</small>
+            <strong>Chat with Krisha Acharya</strong>
+          </div>
+          <span class="contact-arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <h3>Send a message</h3>
+      <p>We'll get back to you within 24 hours.</p>
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="Krisha Acharya" id="fname">
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="you@yourbrand.com" id="femail">
+      </div>
+      <div class="form-group">
+        <label>Package Interest</label>
+        <select id="fpackage">
+          <option value="">Select a package...</option>
+          <option value="Starter">Starter — ₹8,000/month</option>
+          <option value="Standard">Standard — ₹12,000/month</option>
+          <option value="Premium">Premium — ₹20,000/month</option>
+          <option value="Custom">Let's discuss something custom</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell us about your brand..." id="fmsg"></textarea>
+      </div>
+      <button class="form-submit" onclick="handleSubmit()">Send Message ✦</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="https://elitecodetechnologies.com/wp-content/uploads/2026/05/ChatGPT-Image-May-1-2026-12_34_25-PM.png" alt="Kriova Studio" onerror="this.style.display='none';this.nextSibling.style.display='block'">
+    <span style="display:none;font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(250,247,242,0.6)">Kriova Studio</span>
+  </div>
+  <p class="footer-copy">© 2026 Kriova Studio · All rights reserved</p>
+  <div class="footer-links">
+    <a href="tel:+919313710406">+91 93137 10406</a>
+    <a href="mailto:acharyakrisha853@gmail.com">Email</a>
+    <a href="https://wa.me/919313710406" target="_blank">WhatsApp</a>
+  </div>
+</footer>
+
+<!-- Float WhatsApp -->
+<a href="https://wa.me/919313710406?text=Hi%20Krisha!%20I'm%20interested%20in%20Kriova%20Studio%20services." target="_blank" class="float-badge" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+  // ─── CURSOR ───
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+      ring.style.transform = 'translate(-50%,-50%) scale(1.5)';
+      ring.style.opacity = '0.25';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.opacity = '0.5';
+    });
+  });
+
+  // ─── INTERSECTION OBSERVER ───
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const delay = el.dataset.delay || 0;
+        setTimeout(() => el.classList.add('visible'), delay * 100);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.service-card').forEach((el, i) => {
+    el.dataset.delay = i;
+    observer.observe(el);
+  });
+  document.querySelectorAll('.plan').forEach((el, i) => {
+    el.dataset.delay = i * 1.5;
+    observer.observe(el);
+  });
+  document.querySelectorAll('.stat, .why-item, .contact-item').forEach((el, i) => {
+    el.dataset.delay = i * 1.5;
+    observer.observe(el);
+  });
+
+  // ─── COUNTER ANIMATION ───
+  function animateCount(el, target, suffix = '') {
+    let start = 0;
+    const duration = 1800;
+    const step = timestamp => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const val = Math.round(ease * target);
+      el.textContent = val + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  const statsObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCount(document.querySelectorAll('.stat-num')[0], 50, '+');
+        animateCount(document.querySelectorAll('.stat-num')[1], 3, '×');
+        document.querySelectorAll('.stat-num')[2].textContent = '100%';
+        statsObs.disconnect();
+      }
+    });
+  }, { threshold: 0.5 });
+  if (document.querySelector('.stats-row')) statsObs.observe(document.querySelector('.stats-row'));
+
+  // ─── FORM SUBMIT ───
+  function handleSubmit() {
+    const name = document.getElementById('fname').value.trim();
+    const email = document.getElementById('femail').value.trim();
+    const pkg = document.getElementById('fpackage').value;
+    const msg = document.getElementById('fmsg').value.trim();
+
+    if (!name || !email) {
+      showToast('Please fill in your name and email ✦');
+      return;
+    }
+
+    const waMsg = `Hi Krisha! My name is ${name} (${email}). I'm interested in the ${pkg || 'your services'}. ${msg ? 'Message: ' + msg : ''}`;
+    window.open(`https://wa.me/919313710406?text=${encodeURIComponent(waMsg)}`, '_blank');
+    
+    document.getElementById('fname').value = '';
+    document.getElementById('femail').value = '';
+    document.getElementById('fpackage').value = '';
+    document.getElementById('fmsg').value = '';
+
+    showToast('Redirecting to WhatsApp... ✦');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // ─── PARALLAX CIRCLES ───
+  document.addEventListener('mousemove', e => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 20;
+    const y = (e.clientY / window.innerHeight - 0.5) * 20;
+    document.querySelector('.circle-1').style.transform = `translate(${x * 0.8}px, ${y * 0.8}px)`;
+    document.querySelector('.circle-2').style.transform = `translate(${-x * 0.5}px, ${-y * 0.5}px)`;
+    document.querySelector('.circle-3').style.transform = `translate(${x * 1.2}px, ${y * 1.2}px)`;
+  });
+
+  // ─── SMOOTH SCROLL ───
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
